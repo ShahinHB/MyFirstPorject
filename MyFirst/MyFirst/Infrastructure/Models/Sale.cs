@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MyFirstProject.Infrastructure.Models
 {
-    class Sale
+    public class Sale
     {
         public int SaleNumber { get; set; }
         public double SalePrice { get; set; }

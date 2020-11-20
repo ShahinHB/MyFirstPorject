@@ -5,7 +5,7 @@ using MyFirstProject.Infrastructure.Enums;
 
 namespace MyFirstProject.Infrastructure.Models
 {
-    class Product
+    public class Product
     {
         public string ProductName { get; set; }
         public double ProductPrice { get; set; }
