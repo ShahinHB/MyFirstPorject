@@ -1,8 +1,7 @@
 ﻿using MyFirstProject.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using MyFirstProject.Infrastructure.Enums
+using MyFirstProject.Infrastructure.Enums;
 
 
 namespace MyFirst.Infrastructure.Interfaces
@@ -11,14 +10,14 @@ namespace MyFirst.Infrastructure.Interfaces
     {
         List<Sale> Sales { get;}
 
-        List<Sale> Products { get; }
-        void AddSale(string Name);
+        List<Product> Products { get; }
+        void AddSale(Sale sale);
         void RemoveProduct(string Sale);
         double TotalSaleDatebyDate(DateTime StartDate, DateTime EndDate);
         double TotalSaleWithDate(DateTime Date);
         int TotalSaleForPrice(double StartPrice, double EndPrice);
         double TotalSaleForNumber(int Number);
-        string AddProduct(string ProductName);
+        void AddProduct(Product product);
         void ChangeProductInfo(string Name, int Count, double Price, Category category);
         string CategoryProduct(Category category);
         string CategoryProduct(double StartPrice, double EndPrice);
