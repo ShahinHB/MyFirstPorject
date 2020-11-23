@@ -18,7 +18,7 @@ namespace MyFirst.Infrastructure.Interfaces
         int TotalSaleForPrice(double StartPrice, double EndPrice);
         double TotalSaleForNumber(int Number);
         void AddProduct(Product product);
-        void ChangeProductInfo(string Name, int Count, double Price, Category category);
+        void ChangeProductInfo(int Code);
         string CategoryProduct(Category category);
         string CategoryProduct(double StartPrice, double EndPrice);
         string SearchingResult(string Search);

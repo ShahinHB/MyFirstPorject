@@ -14,6 +14,7 @@ namespace MyFirst.Infrastructure.Services
         public List<Sale> Sales => _sales;
 
         public List<Product> Products => _products;
+       
 
         public void AddSale(Sale sale)
         {
@@ -28,17 +29,31 @@ namespace MyFirst.Infrastructure.Services
 
         public string CategoryProduct(Category category)
         {
-            return _products.Where(p => p.ProductCategory == category)();
+            Product product = _products.Where(s => s.ProductCategory == category).First();
+            return product.ProductName;
         }
 
         public string CategoryProduct(double StartPrice, double EndPrice)
         {
-            throw new NotImplementedException();
+            Product product = _products.Where(s => s.ProductPrice >= StartPrice && s.ProductPrice <= EndPrice).First();
+            return product.ProductName;
         }
 
-        public void ChangeProductInfo(string Name, int Count, double Price, Category category)
+        public void ChangeProductInfo(int Code)
         {
-            throw new NotImplementedException();
+            Product product = _products.Where(s => s.ProductCode == Code).First();
+            Console.WriteLine(product.ProductCode);
+            Console.WriteLine(product.ProductName);
+            Console.WriteLine(product.ProductPrice);
+            Console.WriteLine(product.ProductCategory);
+            Console.Write("Yeni kod" + Console.ReadLine());
+            Console.Write("Yeni ad" + Console.ReadLine());
+            Console.Write("Yeni dəyər" + Console.ReadLine());
+            Console.Write("Yeni kateqoriya" + Console.ReadLine());
+            //qalib birde bax!!!!!
+            //
+            //
+            //
         }
 
         public void RemoveProduct(string Sale)
@@ -48,7 +63,8 @@ namespace MyFirst.Infrastructure.Services
 
         public string SearchingResult(string Search)
         {
-            return _products.Where(s => s.ProductName == Search).(s => s.ProductName);
+            Product product = _products.Where(s => s.ProductName.Contains(Search)).First();
+            return product.ProductName;
         }
 
         public double TotalSaleDatebyDate(DateTime StartDate, DateTime EndDate)

@@ -1,0 +1,11 @@
+C:\Users\Shahin\Documents\GitHub\Console\MyFirst\MyFirst\bin\Debug\netcoreapp2.2\MyFirst.deps.json
+C:\Users\Shahin\Documents\GitHub\Console\MyFirst\MyFirst\bin\Debug\netcoreapp2.2\MyFirst.runtimeconfig.json
+C:\Users\Shahin\Documents\GitHub\Console\MyFirst\MyFirst\bin\Debug\netcoreapp2.2\MyFirst.runtimeconfig.dev.json
+C:\Users\Shahin\Documents\GitHub\Console\MyFirst\MyFirst\bin\Debug\netcoreapp2.2\MyFirst.dll
+C:\Users\Shahin\Documents\GitHub\Console\MyFirst\MyFirst\bin\Debug\netcoreapp2.2\MyFirst.pdb
+C:\Users\Shahin\Documents\GitHub\Console\MyFirst\MyFirst\obj\Debug\netcoreapp2.2\MyFirst.csprojAssemblyReference.cache
+C:\Users\Shahin\Documents\GitHub\Console\MyFirst\MyFirst\obj\Debug\netcoreapp2.2\MyFirst.csproj.CoreCompileInputs.cache
+C:\Users\Shahin\Documents\GitHub\Console\MyFirst\MyFirst\obj\Debug\netcoreapp2.2\MyFirst.AssemblyInfoInputs.cache
+C:\Users\Shahin\Documents\GitHub\Console\MyFirst\MyFirst\obj\Debug\netcoreapp2.2\MyFirst.AssemblyInfo.cs
+C:\Users\Shahin\Documents\GitHub\Console\MyFirst\MyFirst\obj\Debug\netcoreapp2.2\MyFirst.dll
+C:\Users\Shahin\Documents\GitHub\Console\MyFirst\MyFirst\obj\Debug\netcoreapp2.2\MyFirst.pdb
