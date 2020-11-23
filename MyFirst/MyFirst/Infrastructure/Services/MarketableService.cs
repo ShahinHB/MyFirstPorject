@@ -57,8 +57,8 @@ namespace MyFirst.Infrastructure.Services
         public void RemoveProduct(int code, int Count)
         {
             Product product = _products.Where(s => s.ProductCode == code).First();
-            for (int i = 0; i < Count; i++)
-            {
+            for (Count = 0; Count <= product.Count; Count++)
+            {               
                 product.Count = Count;
                 break;
             }
