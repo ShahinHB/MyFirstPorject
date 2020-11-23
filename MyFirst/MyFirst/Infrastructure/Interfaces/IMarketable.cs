@@ -12,7 +12,7 @@ namespace MyFirst.Infrastructure.Interfaces
 
         List<Product> Products { get; }
         void AddSale(Sale sale);
-        void RemoveProduct(string Sale);
+        void RemoveProduct(int Code, int Count);
         double TotalSaleDatebyDate(DateTime StartDate, DateTime EndDate);
         double TotalSaleWithDate(DateTime Date);
         int TotalSaleForPrice(double StartPrice, double EndPrice);

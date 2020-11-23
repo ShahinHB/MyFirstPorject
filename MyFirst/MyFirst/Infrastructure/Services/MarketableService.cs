@@ -12,9 +12,7 @@ namespace MyFirst.Infrastructure.Services
         private List<Sale> _sales;
         private List<Product> _products;
         public List<Sale> Sales => _sales;
-
         public List<Product> Products => _products;
-       
 
         public void AddSale(Sale sale)
         {
@@ -56,9 +54,17 @@ namespace MyFirst.Infrastructure.Services
             //
         }
 
-        public void RemoveProduct(string Sale)
+        public void RemoveProduct(int code, int Count)
         {
-            throw new NotImplementedException();
+            Product product = _products.Where(s => s.ProductCode == code).First();
+            for (int i = 0; i < Count; i++)
+            {
+                product.Count = Count;
+                break;
+            }
+           int nowProductCount = product.Count - Count; // nowproductCount ---- satisdan cixarildiqdan sonra magazada qalan mehsul
+            Console.WriteLine(nowProductCount);
+            
         }
 
         public string SearchingResult(string Search)

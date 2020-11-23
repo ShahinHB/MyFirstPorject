@@ -7,6 +7,7 @@ namespace MyFirstProject.Infrastructure.Models
 {
     public class Product
     {
+        
         public string ProductName { get; set; }
         public double ProductPrice { get; set; }
         public Category ProductCategory { get; set; }
