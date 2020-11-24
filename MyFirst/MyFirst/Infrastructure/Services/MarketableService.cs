@@ -16,12 +16,12 @@ namespace MyFirst.Infrastructure.Services
 
         public MarketableService()
         {
-            _sales = new List<Sale>();
-            _sales.Add(new Sale
+            _sales = new List<Sale>(){
+                new Sale
             {
                 SaleNumber = 1019210,
                 SalePrice = 4050.87,
-                SaleItems =,
+                SaleItems = ,
                 Date = new DateTime(2020, 11, 15),
             },
             new Sale
@@ -37,11 +37,14 @@ namespace MyFirst.Infrastructure.Services
                 SalePrice = 3605.33,
                 SaleItems =,
                 Date = new DateTime(2019, 05, 15)
-            });
+            }
+        };
+        
 
 
             #region Product List
-            _products = new List<Product>() {
+            _products = new List<Product>()
+            {
                 new Product
                 {
                     ProductCode = 109665,
@@ -69,10 +72,11 @@ namespace MyFirst.Infrastructure.Services
             new Product
             {
                 ProductCode = 175662,
-                ProductName = "Xiaomi Mi 9 T 9 T Redmi K20",
+                ProductName = "Xiaomi Mi 9 T Redmi K20",
                 ProductCategory = Category.Phones,
                 ProductPrice = 279,
-                Count = 97
+                Count = 97,
+                
             },
             new Product
             {
@@ -141,14 +145,7 @@ namespace MyFirst.Infrastructure.Services
 
         public void RemoveProduct(int code, int Count)
         {
-            Product product = _products.Where(s => s.ProductCode == code).First();
-            for (Count = 0; Count <= product.Count; Count++)
-            {               
-                product.Count = Count;
-                break;
-            }
-           int nowProductCount = product.Count - Count; // nowproductCount ---- satisdan cixarildiqdan sonra magazada qalan mehsul
-            Console.WriteLine(nowProductCount);
+            _sales.RemoveAt(code);
             
         }
 

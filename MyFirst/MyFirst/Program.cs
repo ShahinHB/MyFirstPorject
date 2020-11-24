@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Text;
 using MyFirst.Infrastructure.Services;
-
+using ConsoleTables;
+using MyFirst.Infrastructure.Models;
 
 namespace MyFirst
 {
@@ -150,10 +151,64 @@ namespace MyFirst
 
             } while (selectInt != 0);
         }
-        static void ShowAddProduct() { }
+        static void ShowAddProduct()
+        {
+
+            Console.WriteLine("------------------Məhsul əlavə et-------------------");
+            Product product = new Product();
+
+            Console.WriteLine("Kateqoriya daxil edin");
+            product.ProductCategory = Console.ReadLine();
+
+
+            Console.WriteLine("Məhsulun kodunu daxil edin");
+            product.ProductCode = Console.ReadLine();
+
+            Console.WriteLine("Məhsulun adını daxil edin");
+            product.ProductName = Console.ReadLine();
+
+            Console.WriteLine("Məhsulun qiymətini daxil edin");
+            product.ProductPrice = Console.ReadLine();
+
+            Console.WriteLine("Məhsulun miqdarını daxil edin");
+            product.Count = Console.ReadLine();
+
+        }
         static void ShowEditProduct() { }
-        static void ShowRemoveProduct() { }
-        static void ShowAllProduct() { }
+        static void ShowRemoveProduct()
+        {
+            Console.WriteLine("---------------------Satışı ləğv et----------------");
+
+            Console.WriteLine("Satış sayını daxil edin");
+            string codeinput = Console.ReadLine();
+            int code;
+            while (!int.TryParse(codeinput, out code))
+            {
+                Console.WriteLine("Rəqəm daxil etməlisiniz");
+                codeinput = Console.ReadLine();
+            }
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+        static void ShowAllProduct()
+        {
+            var table = new ConsoleTable("№", "Kodu", "Adı", "Qiyməti", "Kateqoriyası", "Anbarda qalıb");
+            var i = 0;
+            foreach (var item in _marketableService.Products)
+            {
+                i++;
+                Console.WriteLine(table.AddRow(i, item.ProductCode, item.ProductName, item.ProductPrice, item.ProductCategory, item.Count));
+            }
+            table.Write();
+        }
         static void ShowCategoryProduct() { }
         static void ShowProductbyTwoPrice() { }
         static void ShowSearch() { }
@@ -161,7 +216,36 @@ namespace MyFirst
         static void ShowCancelledProductfromSale() { }
         static void ShowRemovedSale() { }
         static void ShowAllSales() { }
-        static void ShowSalesbyTwoDate() { }
+        static void ShowSalesbyTwoDate()
+        {
+            Console.WriteLine("Müəyyən tarix intervalındakı ümumi satış");
+
+            Console.WriteLine("Başlanğıc tarixi daxil edin");
+            string startDateİnput = Console.ReadLine();
+            DateTime StartDate;
+            while (!DateTime.TryParse(startDateİnput, out StartDate))
+            {
+                Console.WriteLine("Tarixi daxil etməlisiniz");
+            }
+
+            Console.WriteLine("Bitiş tarixini daxil edin");
+            string endDateInput = Console.ReadLine();
+            DateTime EndDate;
+            while (!DateTime.TryParse(endDateInput, out EndDate)) ;
+            {
+                Console.WriteLine("Tarixi daxil etməlisiniz");
+            }
+            double result = _marketableService.TotalSaleDatebyDate(StartDate,EndDate);
+
+            if (result != 0)
+            {
+                Console.WriteLine(StartDate.ToString("dd.MM.yyyy") + "-" + EndDate.ToString("dd.MM.yyyy") + " " + "aralığındakı satış toplamı" + " " + result + " " + "qədərdir");
+            }
+            else
+            {
+                Console.WriteLine(StartDate.ToString("dd.MM.yyyy") + " -" + EndDate.ToString("dd.MM.yyyy") + "aralığındakı satış olmayıb");
+            }
+        }
         static void ShowSalesbyTwoPrice() { }
         static void ShowSaleforDate() { }
         static void ShowSaleforNumber() { }
