@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Text;
+using MyFirst.Infrastructure.Services;
+
 
 namespace MyFirst
 {
     class Program
     {
-
+        private static MarketableService _marketableService = new MarketableService();
+        public Program()
+        {
+            _marketableService = new MarketableService();
+        }
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;

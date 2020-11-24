@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using MyFirstProject.Infrastructure.Enums;
+using MyFirst.Infrastructure.Enums;
 
-namespace MyFirstProject.Infrastructure.Models
+namespace MyFirst.Infrastructure.Models
 {
     public class Product
     {

@@ -1,7 +1,7 @@
-﻿using MyFirstProject.Infrastructure.Models;
+﻿using MyFirst.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
-using MyFirstProject.Infrastructure.Enums;
+using MyFirst.Infrastructure.Enums;
 
 
 namespace MyFirst.Infrastructure.Interfaces

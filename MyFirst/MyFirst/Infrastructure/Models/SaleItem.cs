@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MyFirstProject.Infrastructure.Models
+namespace MyFirst.Infrastructure.Models
 {
    public class SaleItem
     {
