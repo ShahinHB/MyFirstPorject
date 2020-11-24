@@ -210,7 +210,39 @@ namespace MyFirst
             table.Write();
         }
         static void ShowCategoryProduct() { }
-        static void ShowProductbyTwoPrice() { }
+        static void ShowProductbyTwoPrice()
+        {
+            Console.WriteLine(" 2 qiymət aralığındakı məhsulları göstərin");
+
+            Console.WriteLine("Başlanğıc qiyməti daxil edin");
+            string startPriceInput = Console.ReadLine();
+            double StartPrice;
+
+            while (!double.TryParse(startPriceInput, out StartPrice))
+            {
+                Console.WriteLine("Yalnız rəqəmlərdən istifadə edin");
+            }
+
+            Console.WriteLine("Son qiyməti daxil edin");
+            string endPriceInput = Console.ReadLine();
+            double EndPrice;
+
+            while (!double.TryParse(endPriceInput, out EndPrice))
+            {
+                Console.WriteLine("Yalnız rəqəmlərdən istifadə edin");
+            }
+
+            double result = _marketableService.TotalSaleForPrice(StartPrice, EndPrice);
+
+            if (result != 0)
+            {
+                Console.WriteLine(StartPrice + " " + EndPrice + " aralığında bu məhsullar satılmışdır");
+            }
+            else
+            {
+                Console.WriteLine("Bu tarixdə məhsul satışı olmayıb");
+            }
+        }
         static void ShowSearch() { }
         static void ShowAddSale() { }
         static void ShowCancelledProductfromSale() { }
@@ -231,7 +263,7 @@ namespace MyFirst
             Console.WriteLine("Bitiş tarixini daxil edin");
             string endDateInput = Console.ReadLine();
             DateTime EndDate;
-            while (!DateTime.TryParse(endDateInput, out EndDate)) ;
+            while (!DateTime.TryParse(endDateInput, out EndDate)) 
             {
                 Console.WriteLine("Tarixi daxil etməlisiniz");
             }
@@ -246,9 +278,87 @@ namespace MyFirst
                 Console.WriteLine(StartDate.ToString("dd.MM.yyyy") + " -" + EndDate.ToString("dd.MM.yyyy") + "aralığındakı satış olmayıb");
             }
         }
-        static void ShowSalesbyTwoPrice() { }
-        static void ShowSaleforDate() { }
-        static void ShowSaleforNumber() { }
+        static void ShowSalesbyTwoPrice()
+        {
+            Console.WriteLine(" 2 qiymət aralığındakı satışları göstərin");
+
+            Console.WriteLine("Başlanğıc qiyməti daxil edin");
+            string startPriceInput = Console.ReadLine();
+            double StartPrice;
+
+            while (!double.TryParse(startPriceInput, out StartPrice))
+            {
+                Console.WriteLine("Yalnız rəqəmlərdən istifadə edin");
+            }
+
+            Console.WriteLine("Son qiyməti daxil edin");
+            string endPriceInput = Console.ReadLine();
+            double EndPrice;
+
+            while (!double.TryParse(endPriceInput, out EndPrice))
+            {
+                Console.WriteLine("Yalnız rəqəmlərdən istifadə edin");
+            }
+
+            double result = _marketableService.TotalSaleForPrice(StartPrice, EndPrice);
+
+            if (result != 0)
+            {
+                Console.WriteLine(StartPrice + " " + EndPrice + " aralığında bu məhsullar satılmışdır");
+            }
+            else
+            {
+                Console.WriteLine("Bu tarixdə məhsul satışı olmayıb");
+            }
+        }
+        static void ShowSaleforDate()
+        {
+            Console.WriteLine("Verilən tarixdəki satış");
+
+            Console.WriteLine("Tarixi daxil edin");
+            string date = Console.ReadLine();
+            DateTime Date;
+
+            while (!DateTime.TryParse(date, out Date))
+            {
+                Console.WriteLine("Tarixi daxil edin");
+            }
+
+            double result = _marketableService.TotalSaleForDate(Date);
+
+            if (result != 0)
+            {
+                Console.WriteLine(Date + "tarixində aşağıdakı satış olmuşdur");
+            }
+            else
+            {
+                Console.WriteLine("Qeyd edilən tarixdə heç bir satış olmamışdır");
+            }
+        }
+        static void ShowSaleforNumber()
+        {
+            Console.WriteLine("Nömrəyə görə satışın çıxarılması");
+
+            Console.WriteLine("Nömrəni daxil edin");
+            string inputNumber = Console.ReadLine();
+            int Number;
+
+            while (!int.TryParse(inputNumber,out Number))
+            {
+                Console.WriteLine("Ədəd daxil edin");
+            }
+
+            double result = _marketableService.TotalSaleForNumber(Number);
+
+            if (result != 0)
+            {
+                Console.WriteLine(Number + "nömrəli məhsul satış məlumatları aşağıdakı kimidir");
+            }
+            else
+            {
+                Console.WriteLine("Bu nömrəli məhsula aid heçbir satış məlumatı yoxdur");
+            }
+        }
 
     }
 }

@@ -75,7 +75,7 @@ namespace MyFirst.Infrastructure.Services
                 ProductName = "Xiaomi Mi 9 T Redmi K20",
                 ProductCategory = Category.Phones,
                 ProductPrice = 279,
-                Count = 97,
+                Count = 97
                 
             },
             new Product
@@ -140,7 +140,7 @@ namespace MyFirst.Infrastructure.Services
             //qalib birde bax!!!!!
             //
             //
-            //
+            // 
         }
 
         public void RemoveProduct(int code, int Count)
@@ -170,7 +170,7 @@ namespace MyFirst.Infrastructure.Services
             return _sales.Where(s => s.SalePrice >= StartPrice && s.SalePrice <= EndPrice).Count();
         }
 
-        public double TotalSaleWithDate(DateTime Date)
+        public double TotalSaleForDate(DateTime Date)
         {
             return _sales.Where(s => s.Date == Date).Sum(s => s.SalePrice);
         }

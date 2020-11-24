@@ -14,7 +14,7 @@ namespace MyFirst.Infrastructure.Interfaces
         void AddSale(Sale sale);
         void RemoveProduct(int Code, int Count);
         double TotalSaleDatebyDate(DateTime StartDate, DateTime EndDate);
-        double TotalSaleWithDate(DateTime Date);
+        double TotalSaleForDate(DateTime Date);
         int TotalSaleForPrice(double StartPrice, double EndPrice);
         double TotalSaleForNumber(int Number);
         void AddProduct(Product product);
