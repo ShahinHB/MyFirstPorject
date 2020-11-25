@@ -114,19 +114,27 @@ namespace MyFirst.Infrastructure.Services
             _products.Add(product);
 
         }
-        public void CategoryProduct(string category)
+        public List<Product> CategoryProduct(Category category)
         {
-            Product product = _products.Where(s => s.ProductCategory.Equals(category)).First();
-            Console.WriteLine(product.ProductCode);
-            Console.WriteLine(product.ProductName);
-            Console.WriteLine(product.ProductPrice);
-            Console.WriteLine(product.Count);
+            var list = _products.FindAll(s => s.ProductCategory==category).ToList();
+            foreach (var item in list)
+            {
+                Console.WriteLine(item.Count);
+                Console.WriteLine(item.ProductCode);
+                Console.WriteLine(item.ProductName);
+                Console.WriteLine(item.ProductPrice);
+
+            }
+
+
+
+            return list;
         }
 
-        public string CategoryProduct(double StartPrice, double EndPrice)
+        public List<Product> CategoryProduct(double StartPrice, double EndPrice)
         {
             Product product = _products.Where(s => s.ProductPrice >= StartPrice && s.ProductPrice <= EndPrice).First();
-            return product.ProductName;
+            return Products;
         }
 
         public void ChangeProductInfo(int Code)

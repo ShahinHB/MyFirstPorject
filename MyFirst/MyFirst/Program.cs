@@ -281,13 +281,12 @@ namespace MyFirst
         static void ShowCategoryProduct()
         {
             Console.WriteLine("Daxil edilmiş kateqoriyaya görə məhsulları çıxarmaq");
-             
             Product product = new Product();
+
             int selectInt;
             do
             {
                 Console.WriteLine("Kateqoriya daxil edin");
-
                 Console.WriteLine("1. Televisions");
                 Console.WriteLine("2. Phones");
                 Console.WriteLine("3. Tablets");
@@ -298,9 +297,8 @@ namespace MyFirst
                 Console.WriteLine("");
                 Console.Write("Rəqəm daxil etməlisiniz");
                 string select = Console.ReadLine();
-                
 
-                while (!Category.TryParse(select, out selectInt))
+                while (!int.TryParse(select, out selectInt))
                 {
                     Console.WriteLine("");
                     Console.Write("Rəqəm daxil etməlisiniz!: ");
@@ -308,8 +306,8 @@ namespace MyFirst
                 }
                 switch (selectInt)
                 {
-                    case 0:
-                        product.ProductCategory = Category.Phones;
+                    case 1:
+                        product.ProductCategory = Category.Televisions;
                         break;
                     case 2:
                         product.ProductCategory = Category.Phones;
@@ -332,6 +330,10 @@ namespace MyFirst
                 }
 
             } while (selectInt == 1);
+
+
+            List<Product> result = _marketableService.CategoryProduct(product.ProductCategory);
+            Console.WriteLine(result);
 
         }
         static void ShowProductbyTwoPrice()
