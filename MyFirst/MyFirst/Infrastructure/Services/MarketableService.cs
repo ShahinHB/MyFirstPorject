@@ -67,7 +67,7 @@ namespace MyFirst.Infrastructure.Services
                 ProductName = "Amazon Fire 7 tablet ",
                 ProductCategory = Category.Tablets,
                 ProductPrice = 49.99,
-                Count = 33
+                Count = 1
             },
             new Product
             {
@@ -117,13 +117,15 @@ namespace MyFirst.Infrastructure.Services
         public List<Product> CategoryProduct(Category category)
         {
             var list = _products.FindAll(s => s.ProductCategory==category).ToList();
+
             foreach (var item in list)
             {
-                Console.WriteLine(item.Count);
-                Console.WriteLine(item.ProductCode);
-                Console.WriteLine(item.ProductName);
-                Console.WriteLine(item.ProductPrice);
-
+                Console.WriteLine("Sayı: " + item.Count);
+                Console.WriteLine("Kodu: " + item.ProductCode);
+                Console.WriteLine("Adı: " + item.ProductName);
+                Console.WriteLine("Qiyməti: " + item.ProductPrice);
+                Console.WriteLine();
+                Console.WriteLine();
             }
 
 
@@ -131,10 +133,22 @@ namespace MyFirst.Infrastructure.Services
             return list;
         }
 
-        public List<Product> CategoryProduct(double StartPrice, double EndPrice)
+        public List<Product> ProductforTwoPrice(double StartPrice, double EndPrice)
         {
-            Product product = _products.Where(s => s.ProductPrice >= StartPrice && s.ProductPrice <= EndPrice).First();
-            return Products;
+            
+            var list = _products.FindAll(s => s.ProductPrice >= StartPrice && s.ProductPrice <= EndPrice).ToList();
+            foreach (var item in list)
+            {
+                Console.WriteLine("Sayı: " + item.Count);
+                Console.WriteLine("Kodu: " + item.ProductCode);
+                Console.WriteLine("Adı: " + item.ProductName);
+                Console.WriteLine("Qiyməti: " + item.ProductPrice);
+                Console.WriteLine();
+                Console.WriteLine();
+
+            }
+
+            return list;
         }
 
         public void ChangeProductInfo(int Code)

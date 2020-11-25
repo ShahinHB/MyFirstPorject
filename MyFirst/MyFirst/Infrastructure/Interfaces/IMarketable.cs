@@ -21,7 +21,7 @@ namespace MyFirst.Infrastructure.Interfaces
         void AddProduct(Product product);
         void ChangeProductInfo(int Code);
         List<Product> CategoryProduct(Category category);
-        List<Product> CategoryProduct(double StartPrice, double EndPrice);
+        List<Product> ProductforTwoPrice(double StartPrice, double EndPrice);
         string SearchingResult(string Search);
 
 

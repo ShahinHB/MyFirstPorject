@@ -295,7 +295,7 @@ namespace MyFirst
                 Console.WriteLine("6. Clothes");
 
                 Console.WriteLine("");
-                Console.Write("Rəqəm daxil etməlisiniz");
+                Console.Write("Rəqəm daxil etməlisiniz: ");
                 string select = Console.ReadLine();
 
                 while (!int.TryParse(select, out selectInt))
@@ -339,35 +339,37 @@ namespace MyFirst
         static void ShowProductbyTwoPrice()
         {
             Console.WriteLine(" 2 qiymət aralığındakı məhsulları göstərin");
+            Console.WriteLine();
+
 
             Console.WriteLine("Başlanğıc qiyməti daxil edin");
             string startPriceInput = Console.ReadLine();
             double StartPrice;
+            Console.WriteLine();
+
 
             while (!double.TryParse(startPriceInput, out StartPrice))
             {
                 Console.WriteLine("Yalnız rəqəmlərdən istifadə edin");
+                Console.WriteLine();
+
             }
 
             Console.WriteLine("Son qiyməti daxil edin");
+            Console.WriteLine();
             string endPriceInput = Console.ReadLine();
             double EndPrice;
 
             while (!double.TryParse(endPriceInput, out EndPrice))
             {
                 Console.WriteLine("Yalnız rəqəmlərdən istifadə edin");
+                Console.WriteLine();
+
             }
 
-            double result = _marketableService.TotalSaleForPrice(StartPrice, EndPrice);
-
-            if (result != 0)
-            {
-                Console.WriteLine(StartPrice + " " + EndPrice + " aralığında bu məhsullar satılmışdır");
-            }
-            else
-            {
-                Console.WriteLine("Bu tarixdə məhsul satışı olmayıb");
-            }
+            List<Product> result = _marketableService.ProductforTwoPrice(StartPrice, EndPrice);
+            Console.WriteLine(result);
+            
         }
         static void ShowSearch() { }
         static void ShowAddSale() { }
@@ -426,16 +428,9 @@ namespace MyFirst
                 Console.WriteLine("Yalnız rəqəmlərdən istifadə edin");
             }
 
-            double result = _marketableService.TotalSaleForPrice(StartPrice, EndPrice);
+                List<Product> result = _marketableService.ProductforTwoPrice(StartPrice, EndPrice);
 
-            if (result != 0)
-            {
-                Console.WriteLine(StartPrice + " " + EndPrice + " aralığında bu məhsullar satılmışdır");
-            }
-            else
-            {
-                Console.WriteLine("Bu tarixdə məhsul satışı olmayıb");
-            }
+            Console.WriteLine(result);
         }
         static void ShowSaleforDate()
         {
