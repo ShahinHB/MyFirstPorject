@@ -21,25 +21,25 @@ namespace MyFirst.Infrastructure.Services
             {
                 SaleNumber = 1019210,
                 SalePrice = 4050.87,
-                SaleItems = ,
+              
                 Date = new DateTime(2020, 11, 15),
             },
             new Sale
             {
                 SaleNumber = 1005673,
                 SalePrice = 12600.65,
-                SaleItems = ,
+                
                 Date = new DateTime(2020, 12, 30)
             },
             new Sale
             {
                 SaleNumber = 1065109,
                 SalePrice = 3605.33,
-                SaleItems =,
+               
                 Date = new DateTime(2019, 05, 15)
             }
         };
-        
+
 
 
             #region Product List
@@ -53,7 +53,7 @@ namespace MyFirst.Infrastructure.Services
                     ProductPrice = 699.99,
                     Count = 14
                 },
-            new Product
+                new Product
             {
                 ProductCode = 105012,
                 ProductName = "BLU G90 - 6.5” HD + Smartphone",
@@ -76,7 +76,7 @@ namespace MyFirst.Infrastructure.Services
                 ProductCategory = Category.Phones,
                 ProductPrice = 279,
                 Count = 97
-                
+
             },
             new Product
             {
@@ -104,7 +104,7 @@ namespace MyFirst.Infrastructure.Services
             }
             #endregion
         };
-    }
+        }
         public void AddSale(Sale sale)
         {
             _sales.Add(sale);
@@ -112,12 +112,15 @@ namespace MyFirst.Infrastructure.Services
         public void AddProduct(Product product)
         {
             _products.Add(product);
-           
+
         }
-        public string CategoryProduct(Category category)
+        public void CategoryProduct(string category)
         {
-            Product product = _products.Where(s => s.ProductCategory == category).First();
-            return product.ProductName;
+            Product product = _products.Where(s => s.ProductCategory.Equals(category)).First();
+            Console.WriteLine(product.ProductCode);
+            Console.WriteLine(product.ProductName);
+            Console.WriteLine(product.ProductPrice);
+            Console.WriteLine(product.Count);
         }
 
         public string CategoryProduct(double StartPrice, double EndPrice)
@@ -143,16 +146,20 @@ namespace MyFirst.Infrastructure.Services
             // 
         }
 
-        public void RemoveProduct(int code, int Count)
+        public void RemoveProduct(int code )
         {
-            _sales.RemoveAt(code);
-            
+            _products.Clear();
+          
         }
+        public void RemoveProductBySale(int code)
+        {
 
+        }
         public string SearchingResult(string Search)
         {
             Product product = _products.Where(s => s.ProductName.Contains(Search)).First();
             return product.ProductName;
+            
         }
 
         public double TotalSaleDatebyDate(DateTime StartDate, DateTime EndDate)

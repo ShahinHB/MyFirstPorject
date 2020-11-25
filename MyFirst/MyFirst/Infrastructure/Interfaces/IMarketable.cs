@@ -12,14 +12,15 @@ namespace MyFirst.Infrastructure.Interfaces
 
         List<Product> Products { get; }
         void AddSale(Sale sale);
-        void RemoveProduct(int Code, int Count);
+        void RemoveProduct(int Code);
         double TotalSaleDatebyDate(DateTime StartDate, DateTime EndDate);
+        void RemoveProductBySale(int code);
         double TotalSaleForDate(DateTime Date);
         int TotalSaleForPrice(double StartPrice, double EndPrice);
         double TotalSaleForNumber(int Number);
         void AddProduct(Product product);
         void ChangeProductInfo(int Code);
-        string CategoryProduct(Category category);
+        void CategoryProduct(string category);
         string CategoryProduct(double StartPrice, double EndPrice);
         string SearchingResult(string Search);
 

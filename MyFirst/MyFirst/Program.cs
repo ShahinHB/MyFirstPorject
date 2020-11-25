@@ -3,6 +3,8 @@ using System.Text;
 using MyFirst.Infrastructure.Services;
 using ConsoleTables;
 using MyFirst.Infrastructure.Models;
+using MyFirst.Infrastructure.Enums;
+using System.Collections.Generic;
 
 namespace MyFirst
 {
@@ -49,7 +51,7 @@ namespace MyFirst
 
             } while (selectInt != 0);
 
-        } 
+        }
         static void ShowSaleCategories()
         {
             int selectInt;
@@ -97,7 +99,7 @@ namespace MyFirst
 
                 }
             } while (selectInt != 0);
-        }
+        } //basliq
         static void ShowProductCategories()
         {
             int selectInt;
@@ -146,70 +148,192 @@ namespace MyFirst
                     case 8:
                         ShowSaleforNumber();
                         break;
-                    
+
                 }
 
             } while (selectInt != 0);
-        }
+        }//basliq
         static void ShowAddProduct()
         {
 
             Console.WriteLine("------------------Məhsul əlavə et-------------------");
             Product product = new Product();
+            int selectInt;
+            do
+            {
+                Console.WriteLine("Kateqoriya daxil edin");
+                Console.WriteLine("1. Televisions");
+                Console.WriteLine("2. Phones");
+                Console.WriteLine("3. Tablets");
+                Console.WriteLine("4. ComputerAccesories");
+                Console.WriteLine("5. Books");
+                Console.WriteLine("6. Clothes");
 
-            Console.WriteLine("Kateqoriya daxil edin");
-            product.ProductCategory = Console.ReadLine();
+                Console.WriteLine("");
+                Console.Write("Rəqəm daxil etməlisiniz");
+                string select = Console.ReadLine();
+
+                while (!int.TryParse(select, out selectInt))
+                {
+                    Console.WriteLine("");
+                    Console.Write("Rəqəm daxil etməlisiniz!: ");
+                    select = Console.ReadLine();
+                }
+                switch (selectInt)
+                {
+                    case 1:
+                        product.ProductCategory = Category.Televisions;
+                            break;
+                    case 2:
+                        product.ProductCategory = Category.Phones;
+                        break;
+                    case 3:
+                        product.ProductCategory = Category.Tablets;
+                        break;
+                    case 4:
+                        product.ProductCategory = Category.ComputerAccesories;
+                        break;
+                    case 5:
+                        product.ProductCategory = Category.Books;
+                        break;
+                    case 6:
+                        product.ProductCategory = Category.Clothes;
+                        break;
+                    default:
+                        Console.WriteLine("Yalnız 1 ilə 6 arasında seçim edə bilərsiniz");
+                        break;
+                }
+
+            } while (selectInt == 1);
+        
 
 
             Console.WriteLine("Məhsulun kodunu daxil edin");
-            product.ProductCode = Console.ReadLine();
+            string productCodeInput = Console.ReadLine();
+            int ProductCode;
+
+            while (!int.TryParse(productCodeInput, out ProductCode))
+            {
+                Console.WriteLine("Yalnız rəqəmlərdən istifadə edə bilərsiniz");
+                productCodeInput = Console.ReadLine();
+            }
+            product.ProductCode = ProductCode;
+
 
             Console.WriteLine("Məhsulun adını daxil edin");
             product.ProductName = Console.ReadLine();
 
             Console.WriteLine("Məhsulun qiymətini daxil edin");
-            product.ProductPrice = Console.ReadLine();
+            string productPriceInput = Console.ReadLine();
+            double ProductPrice;
+
+            while (!double.TryParse(productPriceInput, out ProductPrice))
+            {
+                Console.WriteLine("Yalnız rəqəmlərdən istifadə edə bilərsiniz");
+                Console.ReadLine();
+            }
+            product.ProductPrice = ProductPrice;
 
             Console.WriteLine("Məhsulun miqdarını daxil edin");
-            product.Count = Console.ReadLine();
+            string productCountInput = Console.ReadLine();
+            int Count;
 
-        }
+            while (!int.TryParse(productCountInput, out Count))
+            {
+                Console.WriteLine("Yalnız rəqəmlərdən istifadə edə bilərsiniz");
+                Console.ReadLine();
+            }
+            product.Count = Count;
+        } //tamamdir
         static void ShowEditProduct() { }
         static void ShowRemoveProduct()
         {
-            Console.WriteLine("---------------------Satışı ləğv et----------------");
+            Product product = new Product();
+            Console.WriteLine("---------------------Məhsulu ləğv et----------------");
 
-            Console.WriteLine("Satış sayını daxil edin");
-            string codeinput = Console.ReadLine();
-            int code;
-            while (!int.TryParse(codeinput, out code))
+            Console.WriteLine("Məhsulun kodunu daxil edin");
+            int code = Convert.ToInt32(Console.ReadLine());
+            _marketableService.RemoveProduct(code);
+            
+
+            if (product != null)
             {
-                Console.WriteLine("Rəqəm daxil etməlisiniz");
-                codeinput = Console.ReadLine();
+                Console.WriteLine("\n -------Məhsul silindi--------");
             }
-            try
+            else
             {
-
-            }
-            catch (Exception)
-            {
-
-                throw;
+                Console.WriteLine("nəsə səhvlik var");
             }
 
-        }
+        }  //tamamdir
         static void ShowAllProduct()
         {
             var table = new ConsoleTable("№", "Kodu", "Adı", "Qiyməti", "Kateqoriyası", "Anbarda qalıb");
-            var i = 0;
+            var i = 1;
             foreach (var item in _marketableService.Products)
             {
+              table.AddRow(i, item.ProductCode, item.ProductName, item.ProductPrice, item.ProductCategory, item.Count);
                 i++;
-                Console.WriteLine(table.AddRow(i, item.ProductCode, item.ProductName, item.ProductPrice, item.ProductCategory, item.Count));
+
             }
             table.Write();
+        }  //tamamdir
+        static void ShowCategoryProduct()
+        {
+            Console.WriteLine("Daxil edilmiş kateqoriyaya görə məhsulları çıxarmaq");
+             
+            Product product = new Product();
+            int selectInt;
+            do
+            {
+                Console.WriteLine("Kateqoriya daxil edin");
+
+                Console.WriteLine("1. Televisions");
+                Console.WriteLine("2. Phones");
+                Console.WriteLine("3. Tablets");
+                Console.WriteLine("4. ComputerAccesories");
+                Console.WriteLine("5. Books");
+                Console.WriteLine("6. Clothes");
+
+                Console.WriteLine("");
+                Console.Write("Rəqəm daxil etməlisiniz");
+                string select = Console.ReadLine();
+                
+
+                while (!Category.TryParse(select, out selectInt))
+                {
+                    Console.WriteLine("");
+                    Console.Write("Rəqəm daxil etməlisiniz!: ");
+                    select = Console.ReadLine();
+                }
+                switch (selectInt)
+                {
+                    case 0:
+                        product.ProductCategory = Category.Phones;
+                        break;
+                    case 2:
+                        product.ProductCategory = Category.Phones;
+                        break;
+                    case 3:
+                        product.ProductCategory = Category.Tablets;
+                        break;
+                    case 4:
+                        product.ProductCategory = Category.ComputerAccesories;
+                        break;
+                    case 5:
+                        product.ProductCategory = Category.Books;
+                        break;
+                    case 6:
+                        product.ProductCategory = Category.Clothes;
+                        break;
+                    default:
+                        Console.WriteLine("Yalnız 1 ilə 6 arasında seçim edə bilərsiniz");
+                        break;
+                }
+
+            } while (selectInt == 1);
+
         }
-        static void ShowCategoryProduct() { }
         static void ShowProductbyTwoPrice()
         {
             Console.WriteLine(" 2 qiymət aralığındakı məhsulları göstərin");
@@ -359,6 +483,5 @@ namespace MyFirst
                 Console.WriteLine("Bu nömrəli məhsula aid heçbir satış məlumatı yoxdur");
             }
         }
-
     }
 }
