@@ -19,10 +19,10 @@ namespace MyFirst.Infrastructure.Interfaces
         int TotalSaleForPrice(double StartPrice, double EndPrice);
         double TotalSaleForNumber(int Number);
         void AddProduct(Product product);
-        void ChangeProductInfo(int Code);
+        List<Product> ChangeProductInfo(int Code);
         List<Product> CategoryProduct(Category category);
         List<Product> ProductforTwoPrice(double StartPrice, double EndPrice);
-        string SearchingResult(string Search);
+        List<Product> SearchingResult(string Search);
 
 
 

@@ -16,26 +16,27 @@ namespace MyFirst.Infrastructure.Services
 
         public MarketableService()
         {
+
             _sales = new List<Sale>(){
                 new Sale
             {
                 SaleNumber = 1019210,
                 SalePrice = 4050.87,
-              
-                Date = new DateTime(2020, 11, 15),
+                SaleItems = ,
+                Date = new DateTime(2020, 11, 15)
             },
             new Sale
             {
                 SaleNumber = 1005673,
                 SalePrice = 12600.65,
-                
+                SaleItems = ,
                 Date = new DateTime(2020, 12, 30)
             },
             new Sale
             {
                 SaleNumber = 1065109,
                 SalePrice = 3605.33,
-               
+                SaleItems = ,
                 Date = new DateTime(2019, 05, 15)
             }
         };
@@ -151,21 +152,9 @@ namespace MyFirst.Infrastructure.Services
             return list;
         }
 
-        public void ChangeProductInfo(int Code)
+        public List<Product> ChangeProductInfo(int Code)
         {
-            Product product = _products.Where(s => s.ProductCode == Code).First();
-            Console.WriteLine(product.ProductCode);
-            Console.WriteLine(product.ProductName);
-            Console.WriteLine(product.ProductPrice);
-            Console.WriteLine(product.ProductCategory);
-            Console.Write("Yeni kod" + Console.ReadLine());
-            Console.Write("Yeni ad" + Console.ReadLine());
-            Console.Write("Yeni dəyər" + Console.ReadLine());
-            Console.Write("Yeni kateqoriya" + Console.ReadLine());
-            //qalib birde bax!!!!!
-            //
-            //
-            // 
+            return _products.FindAll(p => p.ProductCode == Code).ToList();
         }
 
         public void RemoveProduct(int code )
@@ -177,11 +166,22 @@ namespace MyFirst.Infrastructure.Services
         {
 
         }
-        public string SearchingResult(string Search)
+        public List<Product> SearchingResult(string Search)
         {
-            Product product = _products.Where(s => s.ProductName.Contains(Search)).First();
-            return product.ProductName;
             
+            var list = _products.FindAll(s => s.ProductName.Contains(Search)).ToList();
+            foreach (var item in list)
+            {
+                Console.WriteLine("Sayı: " + item.Count);
+                Console.WriteLine("Kodu: " + item.ProductCode);
+                Console.WriteLine("Adı: " + item.ProductName);
+                Console.WriteLine("Qiyməti: " + item.ProductPrice);
+                Console.WriteLine();
+                Console.WriteLine();
+
+            }
+
+            return list;
         }
 
         public double TotalSaleDatebyDate(DateTime StartDate, DateTime EndDate)
