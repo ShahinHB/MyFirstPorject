@@ -17,36 +17,11 @@ namespace MyFirst.Infrastructure.Services
         public MarketableService()
         {
 
-            _sales = new List<Sale>(){
-                new Sale
-            {
-                SaleNumber = 1019210,
-                SalePrice = 4050.87,
-                SaleItems = ,
-                Date = new DateTime(2020, 11, 15)
-            },
-            new Sale
-            {
-                SaleNumber = 1005673,
-                SalePrice = 12600.65,
-                SaleItems = ,
-                Date = new DateTime(2020, 12, 30)
-            },
-            new Sale
-            {
-                SaleNumber = 1065109,
-                SalePrice = 3605.33,
-                SaleItems = ,
-                Date = new DateTime(2019, 05, 15)
-            }
-        };
-
-
 
             #region Product List
             _products = new List<Product>()
             {
-                new Product
+                new Product // Tv Product
                 {
                     ProductCode = 109665,
                     ProductName = "SAMSUNG 50-inch Class QLED Q60T Series",
@@ -54,7 +29,7 @@ namespace MyFirst.Infrastructure.Services
                     ProductPrice = 699.99,
                     Count = 14
                 },
-                new Product
+                new Product // Phone Product
             {
                 ProductCode = 105012,
                 ProductName = "BLU G90 - 6.5” HD + Smartphone",
@@ -62,7 +37,7 @@ namespace MyFirst.Infrastructure.Services
                 ProductPrice = 290.48,
                 Count = 67
             },
-            new Product
+            new Product // Tablet Product
             {
                 ProductCode = 103992,
                 ProductName = "Amazon Fire 7 tablet ",
@@ -70,7 +45,7 @@ namespace MyFirst.Infrastructure.Services
                 ProductPrice = 49.99,
                 Count = 1
             },
-            new Product
+            new Product // Phone Product
             {
                 ProductCode = 175662,
                 ProductName = "Xiaomi Mi 9 T Redmi K20",
@@ -79,7 +54,7 @@ namespace MyFirst.Infrastructure.Services
                 Count = 97
 
             },
-            new Product
+            new Product // Videocard Product
             {
                 ProductCode = 281883,
                 ProductName = "Gigabyte GeForce RTX 2070 Gaming OC 8G",
@@ -87,7 +62,7 @@ namespace MyFirst.Infrastructure.Services
                 ProductPrice = 1189,
                 Count = 5
             },
-            new Product
+            new Product // Book Product
             {
                 ProductCode = 215615,
                 ProductName = "Deadly Cross (Alex Cross Book 28)",
@@ -105,19 +80,95 @@ namespace MyFirst.Infrastructure.Services
             }
             #endregion
         };
+            _sales = new List<Sale>(){
+                new Sale //first Sale
+            #region Sale List
+                {
+                SaleNumber = 128103,
+                SalePrice = 404.73
+,
+                Date = new DateTime(2020, 11, 15),
+                SaleItems = new List<SaleItem>()
+                {
+                    new SaleItem
+                    {
+                        SaleItemNumber= 0001,
+                        SaleItemCount = 27,
+                        ProductName = new Product()
+                        {
+                            ProductCode = 215615,
+                            ProductName = "Deadly Cross (Alex Cross Book 28)",
+                            ProductCategory = Category.Books,
+                            ProductPrice = 14.99,
+                            Count = 14
+                        }
+                    }
+
+                }
+
+            },
+            new Sale //Second Sale
+            {
+                SaleNumber = 183910,
+                SalePrice = 6696,
+                Date = new DateTime(2020, 12, 30),
+                SaleItems = new List<SaleItem>()
+                {
+                    new SaleItem
+                    {
+                        SaleItemNumber= 0002,
+                        SaleItemCount = 2,
+                        ProductName = new Product()
+                        {
+                           ProductCode = 175662,
+                           ProductName = "Xiaomi Mi 9 T Redmi K20",
+                           ProductCategory = Category.Phones,
+                           ProductPrice = 279,
+                           Count = 97
+                        }
+                    }
+                }
+
+            },
+            new Sale {
+                SaleNumber = 427819,
+                SalePrice = 55883,
+                Date = new DateTime(2020, 09, 22),
+                SaleItems = new List<SaleItem>()
+                {
+                    new SaleItem
+                    {
+                        SaleItemNumber= 0003,
+                        SaleItemCount = 47,
+                        ProductName = new Product()
+                        {
+                           ProductCode = 281883,
+                           ProductName = "Gigabyte GeForce RTX 2070 Gaming OC 8G",
+                           ProductCategory = Category.ComputerAccesories,
+                           ProductPrice = 1189,
+                           Count = 5
+                        }
+                    }
+                }
+
+            },        
+            #endregion
+        };
+
         }
         public void AddSale(Sale sale)
         {
             _sales.Add(sale);
         }
-        public void AddProduct(Product product)
+        public void AddProduct(Product product) //Add Product Information to Product Table
         {
             _products.Add(product);
 
         }
-        public List<Product> CategoryProduct(Category category)
+        public List<Product> CategoryProduct(Category category) // if Product Category equal this Category, show this Product Information 
         {
-            var list = _products.FindAll(s => s.ProductCategory==category).ToList();
+            var list = _products.FindAll(s => s.ProductCategory == category).ToList();
+            // if Fineded word(s) have a product name. Show this Product Information
 
             foreach (var item in list)
             {
@@ -128,16 +179,15 @@ namespace MyFirst.Infrastructure.Services
                 Console.WriteLine();
                 Console.WriteLine();
             }
-
-
-
             return list;
         }
 
         public List<Product> ProductforTwoPrice(double StartPrice, double EndPrice)
         {
-            
+
             var list = _products.FindAll(s => s.ProductPrice >= StartPrice && s.ProductPrice <= EndPrice).ToList();
+            // if Product Price between StartPrice and EndPrice. Show this Product Information
+
             foreach (var item in list)
             {
                 Console.WriteLine("Sayı: " + item.Count);
@@ -146,21 +196,21 @@ namespace MyFirst.Infrastructure.Services
                 Console.WriteLine("Qiyməti: " + item.ProductPrice);
                 Console.WriteLine();
                 Console.WriteLine();
-
             }
 
             return list;
         }
 
-        public List<Product> ChangeProductInfo(int Code)
+        public List<Product> ChangeProductInfo(int Code) //Changed Product Name, Count, Category, Code
         {
             return _products.FindAll(p => p.ProductCode == Code).ToList();
+            // fineded product which its Product Code equal this Code
         }
 
-        public void RemoveProduct(int code )
+        public void RemoveProduct(int code) //remove product from table (Allproduct)
         {
             _products.Clear();
-          
+
         }
         public void RemoveProductBySale(int code)
         {
@@ -168,7 +218,7 @@ namespace MyFirst.Infrastructure.Services
         }
         public List<Product> SearchingResult(string Search)
         {
-            
+
             var list = _products.FindAll(s => s.ProductName.Contains(Search)).ToList();
             foreach (var item in list)
             {
@@ -176,33 +226,65 @@ namespace MyFirst.Infrastructure.Services
                 Console.WriteLine("Kodu: " + item.ProductCode);
                 Console.WriteLine("Adı: " + item.ProductName);
                 Console.WriteLine("Qiyməti: " + item.ProductPrice);
-                Console.WriteLine("Kateqoriya " + item.ProductCategory);
+                Console.WriteLine("Kateqoriya: " + item.ProductCategory);
                 Console.WriteLine();
                 Console.WriteLine();
+            }
+            return list;
+        }
 
+        public List<Sale> TotalSaleDatebyDate(DateTime StartDate, DateTime EndDate)
+        {
+            var list = _sales.FindAll(s => s.Date >= StartDate && s.Date <= EndDate).ToList();
+
+            foreach (var item in list)
+            {
+                Console.WriteLine("Satışın Nömrəsi: " + item.SaleNumber);
+                Console.WriteLine("Ümumi məbləğ: " + item.SalePrice);
+                Console.WriteLine("Satış edilən tarix: " + item.Date.ToString("dd.MM.yyyy"));
+                Console.WriteLine("Sayı: " + item.SaleItems.Count);
+                Console.WriteLine();
+                Console.WriteLine();
+            }
+            return list;
+        }
+
+        public double TotalSaleForNumber(int Number)
+        {
+            return _sales.Where(s => s.SaleNumber == Number).Sum(s => s.SalePrice);
+        }
+
+        public List<Sale> TotalSaleForPrice(double StartPrice, double EndPrice)
+        {
+            var list = _sales.FindAll(s => s.SalePrice >= StartPrice && s.SalePrice <= EndPrice).ToList();
+            // if Product Price between StartPrice and EndPrice. Show this Product Information
+
+            foreach (var item in list)
+            {
+                Console.WriteLine("Satışın Nömrəsi: " + item.SaleNumber);
+                Console.WriteLine("Ümumi məbləğ: " + item.SalePrice);
+
+                Console.WriteLine();
+                Console.WriteLine();
             }
 
             return list;
         }
 
-        public double TotalSaleDatebyDate(DateTime StartDate, DateTime EndDate)
+        public List<Sale> TotalSaleForDate(DateTime Date)
         {
-            return _sales.Where(s => s.Date >= StartDate && s.Date <= EndDate).Sum(s=>s.SalePrice);
-        }
+            //return _sales.Where(s => s.Date == Date).Sum(s => s.SalePrice);
+            var list = _sales.FindAll(s => s.Date == Date).ToList();
 
-        public double TotalSaleForNumber(int Number)
-        {
-            return _sales.Where(s => s.SaleNumber == Number ).Sum(s=>s.SalePrice);
-        }
+            foreach (var item in list)
+            {
+                Console.WriteLine("Satışın Nömrəsi: " + item.SaleNumber);
+                Console.WriteLine("Ümumi məbləğ: " + item.SalePrice);
 
-        public int TotalSaleForPrice(double StartPrice, double EndPrice)
-        {
-            return _sales.Where(s => s.SalePrice >= StartPrice && s.SalePrice <= EndPrice).Count();
-        }
-
-        public double TotalSaleForDate(DateTime Date)
-        {
-            return _sales.Where(s => s.Date == Date).Sum(s => s.SalePrice);
-        }
+                Console.WriteLine();
+                Console.WriteLine();
+            }
+            return list;
+        } 
     }
 }

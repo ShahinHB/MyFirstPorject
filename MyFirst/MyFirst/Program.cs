@@ -500,63 +500,78 @@ namespace MyFirst
         static void ShowAddSale() { }
         static void ShowCancelledProductfromSale() { }
         static void ShowRemovedSale() { }
-        static void ShowAllSales() { }
+        static void ShowAllSales()
+        {
+            var table = new ConsoleTable("№","Nömrəsi", "Qiyməti", "Tarix", "Sayı");
+            var i = 1;
+            foreach (var item in _marketableService.Sales)
+            {
+                table.AddRow(i, item.SaleNumber, item.SalePrice, item.Date.ToString("dd.MM.yyyy"), item.SaleItems.Count);
+                i++;
+
+            }
+            table.Write();
+        } // completed
         static void ShowSalesbyTwoDate()
         {
             Console.WriteLine("Müəyyən tarix intervalındakı ümumi satış");
 
             Console.WriteLine("Başlanğıc tarixi daxil edin");
+            Console.WriteLine();
+
             string startDateİnput = Console.ReadLine();
             DateTime StartDate;
             while (!DateTime.TryParse(startDateİnput, out StartDate))
             {
-                Console.WriteLine("Tarixi daxil etməlisiniz");
-            }
+                Console.WriteLine("Tarixi daxil etməlisiniz: ");            
+                    }
 
             Console.WriteLine("Bitiş tarixini daxil edin");
+            Console.WriteLine();
             string endDateInput = Console.ReadLine();
             DateTime EndDate;
             while (!DateTime.TryParse(endDateInput, out EndDate)) 
             {
                 Console.WriteLine("Tarixi daxil etməlisiniz");
             }
-            double result = _marketableService.TotalSaleDatebyDate(StartDate,EndDate);
+            List<Sale> result = _marketableService.TotalSaleDatebyDate(StartDate,EndDate);
 
-            if (result != 0)
-            {
-                Console.WriteLine(StartDate.ToString("dd.MM.yyyy") + "-" + EndDate.ToString("dd.MM.yyyy") + " " + "aralığındakı satış toplamı" + " " + result + " " + "qədərdir");
-            }
-            else
-            {
-                Console.WriteLine(StartDate.ToString("dd.MM.yyyy") + " -" + EndDate.ToString("dd.MM.yyyy") + "aralığındakı satış olmayıb");
-            }
-        }
+            
+        } //completed
         static void ShowSalesbyTwoPrice()
         {
-            Console.WriteLine(" 2 qiymət aralığındakı satışları göstərin");
+            Console.WriteLine("------------ 2 qiymət aralığındakı satışları göstərin------------");
+            Console.WriteLine();
 
+            #region input Prices
             Console.WriteLine("Başlanğıc qiyməti daxil edin");
             string startPriceInput = Console.ReadLine();
             double StartPrice;
+            Console.WriteLine();
+
 
             while (!double.TryParse(startPriceInput, out StartPrice))
             {
                 Console.WriteLine("Yalnız rəqəmlərdən istifadə edin");
+                Console.WriteLine();
+
             }
 
             Console.WriteLine("Son qiyməti daxil edin");
+            Console.WriteLine();
             string endPriceInput = Console.ReadLine();
             double EndPrice;
 
             while (!double.TryParse(endPriceInput, out EndPrice))
             {
                 Console.WriteLine("Yalnız rəqəmlərdən istifadə edin");
+                Console.WriteLine();
+
             }
-
-                List<Product> result = _marketableService.ProductforTwoPrice(StartPrice, EndPrice);
-
+            #endregion
+            List<Sale> result = _marketableService.TotalSaleForPrice(StartPrice, EndPrice);
             Console.WriteLine(result);
-        }
+        } //completed
         static void ShowSaleforDate()
         {
             Console.WriteLine("Verilən tarixdəki satış");
@@ -570,16 +585,9 @@ namespace MyFirst
                 Console.WriteLine("Tarixi daxil edin");
             }
 
-            double result = _marketableService.TotalSaleForDate(Date);
+            List<Sale> result = _marketableService.TotalSaleForDate(Date);
 
-            if (result != 0)
-            {
-                Console.WriteLine(Date + "tarixində aşağıdakı satış olmuşdur");
-            }
-            else
-            {
-                Console.WriteLine("Qeyd edilən tarixdə heç bir satış olmamışdır");
-            }
+            Console.WriteLine(result);
         }
         static void ShowSaleforNumber()
         {
