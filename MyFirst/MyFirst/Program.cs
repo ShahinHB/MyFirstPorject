@@ -102,7 +102,7 @@ namespace MyFirst
 
                 }
             } while (selectInt != 0);
-        } //basliq
+        } //title menu
         static void ShowProductCategories()
         {
             int selectInt;
@@ -156,7 +156,7 @@ namespace MyFirst
                 }
 
             } while (selectInt != 0);
-        }//basliq
+        }//title menu
         static void ShowAddProduct()
         {
 
@@ -165,6 +165,7 @@ namespace MyFirst
             int selectInt;
             do
             {
+                #region CATEGORY
                 Console.WriteLine("Kateqoriya daxil edin");
                 Console.WriteLine("1. Televisions");
                 Console.WriteLine("2. Phones");
@@ -208,11 +209,12 @@ namespace MyFirst
                         ShowAddProduct();
 
                         break;
+                        #endregion
                 }
 
             } while (selectInt == 0);
 
-
+            #region Product Code
 
             Console.WriteLine("Məhsulun kodunu daxil edin");
             string productCodeInput = Console.ReadLine();
@@ -225,9 +227,15 @@ namespace MyFirst
             }
             product.ProductCode = ProductCode;
 
+            #endregion
 
+            #region Product Name
             Console.WriteLine("Məhsulun adını daxil edin");
             product.ProductName = Console.ReadLine();
+
+            #endregion
+
+            #region Product Price
 
             Console.WriteLine("Məhsulun qiymətini daxil edin");
             string productPriceInput = Console.ReadLine();
@@ -239,7 +247,9 @@ namespace MyFirst
                 Console.ReadLine();
             }
             product.ProductPrice = ProductPrice;
+            #endregion
 
+            #region Product Count
             Console.WriteLine("Məhsulun miqdarını daxil edin");
             string productCountInput = Console.ReadLine();
             int Count;
@@ -248,10 +258,11 @@ namespace MyFirst
             {
                 Console.WriteLine("Yalnız rəqəmlərdən istifadə edə bilərsiniz");
                 Console.ReadLine();
+                #endregion
             }
             product.Count = Count;
             _marketableService.AddProduct(product);
-        } //tamamdir
+        } //completed
         static void ShowEditProduct()
         {
             Product product = new Product();
@@ -262,7 +273,7 @@ namespace MyFirst
 
             List<Product> productCode = _marketableService.ChangeProductInfo(code);
 
-
+            #region Input Price, Count, Name
             Console.WriteLine("");
             Console.Write("Məhsulun yeni adını daxil edin: ");
             string productName = Console.ReadLine();
@@ -278,10 +289,12 @@ namespace MyFirst
             Console.Write("Məhsulun yeni məbləğini daxil edin: ");
             double productPrice = Convert.ToDouble(Console.ReadLine());
 
+            #endregion
             Console.WriteLine("");
             int selectInt;
             do
             {
+                #region ChooseCategory
                 Console.WriteLine("Kateqoriya daxil edin");
                 Console.WriteLine("1. Televisions");
                 Console.WriteLine("2. Phones");
@@ -326,14 +339,10 @@ namespace MyFirst
                     default:
                         Console.WriteLine("Yalnız 1 ilə 6 arasında seçim edə bilərsiniz");
                         break;
+                        #endregion
                 }
-
-            
-
             } while (selectInt == -1);
-
-
-
+            #region Product Informations
             foreach (var item in productCode)
             {
                 item.ProductName = productName;
@@ -341,11 +350,14 @@ namespace MyFirst
                 item.ProductPrice = productPrice;
                 item.ProductCategory = (Category)selectInt;
             }
-        } //tamamdir
+            #endregion
+        } //completed
         static void ShowRemoveProduct()
         {
+
             Product product = new Product();
             Console.WriteLine("---------------------Məhsulu ləğv et----------------");
+
 
             Console.WriteLine("Məhsulun kodunu daxil edin");
             int code = Convert.ToInt32(Console.ReadLine());
@@ -358,12 +370,13 @@ namespace MyFirst
             }
             else
             {
-                Console.WriteLine("nəsə səhvlik var");
+                Console.WriteLine("Nəsə səhvlik var");
             }
 
-        }  //tamamdir
+        }  //completed
         static void ShowAllProduct()
         {
+            #region table
             var table = new ConsoleTable("№", "Kodu", "Adı", "Qiyməti", "Kateqoriyası", "Anbarda qalıb");
             var i = 1;
             foreach (var item in _marketableService.Products)
@@ -373,15 +386,18 @@ namespace MyFirst
 
             }
             table.Write();
-        }  //tamamdir
+            #endregion
+        }  //completed
         static void ShowCategoryProduct()
         {
+            
             Console.WriteLine("Daxil edilmiş kateqoriyaya görə məhsulları çıxarmaq");
             Product product = new Product();
 
             int selectInt;
             do
             {
+                #region inputeCategory
                 Console.WriteLine("Kateqoriya daxil edin");
                 Console.WriteLine("1. Televisions");
                 Console.WriteLine("2. Phones");
@@ -423,6 +439,7 @@ namespace MyFirst
                     default:
                         Console.WriteLine("Yalnız 1 ilə 6 arasında seçim edə bilərsiniz");
                         break;
+                        #endregion
                 }
 
             } while (selectInt == -1);
@@ -431,13 +448,13 @@ namespace MyFirst
             List<Product> result = _marketableService.CategoryProduct(product.ProductCategory);
             Console.WriteLine(result);
 
-        } //tamamdir
+        } //completed
         static void ShowProductbyTwoPrice()
         {
             Console.WriteLine("------------ 2 qiymət aralığındakı məhsulları göstərin------------");
             Console.WriteLine();
 
-
+            #region input Prices
             Console.WriteLine("Başlanğıc qiyməti daxil edin");
             string startPriceInput = Console.ReadLine();
             double StartPrice;
@@ -462,21 +479,24 @@ namespace MyFirst
                 Console.WriteLine();
 
             }
-
+            #endregion
             List<Product> result = _marketableService.ProductforTwoPrice(StartPrice, EndPrice);
             Console.WriteLine(result);
             
-        } //tamamdir
+        } //completed
         static void ShowSearch()
         {
+
             Console.WriteLine("------------Axtarış edin-------------");
             Product product = new Product();
 
+            #region input Your Searching word
             Console.WriteLine("Yazın: ");
             string result = Console.ReadLine();
             _marketableService.SearchingResult(result);
             Console.WriteLine(result);
-        } //tamamdir
+            #endregion
+        } //completed
         static void ShowAddSale() { }
         static void ShowCancelledProductfromSale() { }
         static void ShowRemovedSale() { }

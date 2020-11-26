@@ -176,6 +176,7 @@ namespace MyFirst.Infrastructure.Services
                 Console.WriteLine("Kodu: " + item.ProductCode);
                 Console.WriteLine("Adı: " + item.ProductName);
                 Console.WriteLine("Qiyməti: " + item.ProductPrice);
+                Console.WriteLine("Kateqoriya " + item.ProductCategory);
                 Console.WriteLine();
                 Console.WriteLine();
 
