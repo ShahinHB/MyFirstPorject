@@ -85,8 +85,7 @@ namespace MyFirst.Infrastructure.Services
             #region Sale List
                 {
                 SaleNumber = 128103,
-                SalePrice = 404.73
-,
+                SalePrice = 404.73,
                 Date = new DateTime(2020, 11, 15),
                 SaleItems = new List<SaleItem>()
                 {
@@ -132,7 +131,7 @@ namespace MyFirst.Infrastructure.Services
             },
             new Sale {
                 SaleNumber = 427819,
-                SalePrice = 55883,
+                SalePrice = 56026.94,
                 Date = new DateTime(2020, 09, 22),
                 SaleItems = new List<SaleItem>()
                 {
@@ -143,11 +142,30 @@ namespace MyFirst.Infrastructure.Services
                         ProductName = new Product()
                         {
                            ProductCode = 281883,
-                           ProductName = "Gigabyte GeForce RTX 2070 Gaming OC 8G",
+                           ProductName = "Gigabyte GeForce RTX 2070 Gaming OC 8GB",
                            ProductCategory = Category.ComputerAccesories,
                            ProductPrice = 1189,
                            Count = 5
-                        }
+
+                        },
+                        
+
+                    },
+                    new SaleItem
+                    {
+                        SaleItemNumber= 7182,
+                        SaleItemCount = 6,
+                        ProductName = new Product()
+                        {
+                           ProductCode = 221690,
+                           ProductName = "Cutiefox 3D Print Crew Neck Pullover Ugly Christmas Sweater Sweatshirts",
+                           ProductCategory = Category.Clothes,
+                           ProductPrice = 23.99,
+                           Count = 17
+
+                        },
+
+
                     }
                 }
 
@@ -209,12 +227,16 @@ namespace MyFirst.Infrastructure.Services
 
         public void RemoveProduct(int code) //remove product from table (Allproduct)
         {
-            _products.Clear();
-
+            var ProductList = _products.ToList();
+            var RemovedItem = ProductList.Find(r => r.ProductCode == code);
+            _products.Remove(RemovedItem);
         }
-        public void RemoveProductBySale(int code)
+        public void RemoveProductBySale(int salecode, int count, int productcode)
         {
-
+            Sale salescode = _sales.Find(s => s.SaleNumber == salecode);
+            SaleItem itemscode = salescode.SaleItems.Find(s => s.ProductName.ProductCode == productcode);
+            
+            
         }
         public List<Product> SearchingResult(string Search)
         {
@@ -249,9 +271,19 @@ namespace MyFirst.Infrastructure.Services
             return list;
         }
 
-        public double TotalSaleForNumber(int Number)
+        public List<Sale> TotalSaleForNumber(int Number)
         {
-            return _sales.Where(s => s.SaleNumber == Number).Sum(s => s.SalePrice);
+            var list = _sales.FindAll(s => s.SaleNumber == Number).ToList();
+            foreach (var item in list)
+            {
+                Console.WriteLine("Satışın Nömrəsi: " + item.SaleNumber);
+                Console.WriteLine("Ümumi məbləğ: " + item.SalePrice);
+                Console.WriteLine("Tarix: " + item.Date.ToString("dd.MM.yyyy"));
+                Console.WriteLine("Satış miqdarı: " + item.SaleItems.Count());
+                Console.WriteLine();
+            }
+
+            return list;
         }
 
         public List<Sale> TotalSaleForPrice(double StartPrice, double EndPrice)
@@ -263,8 +295,8 @@ namespace MyFirst.Infrastructure.Services
             {
                 Console.WriteLine("Satışın Nömrəsi: " + item.SaleNumber);
                 Console.WriteLine("Ümumi məbləğ: " + item.SalePrice);
-
-                Console.WriteLine();
+                Console.WriteLine("Tarix: " + item.Date.ToString("dd.MM.yyyy"));
+                Console.WriteLine("Satış miqdarı: " + item.SaleItems.Count());
                 Console.WriteLine();
             }
 
@@ -280,11 +312,18 @@ namespace MyFirst.Infrastructure.Services
             {
                 Console.WriteLine("Satışın Nömrəsi: " + item.SaleNumber);
                 Console.WriteLine("Ümumi məbləğ: " + item.SalePrice);
-
-                Console.WriteLine();
+                Console.WriteLine("Tarix: " + item.Date.ToString("dd.MM.yyyy"));
+                Console.WriteLine("Satış miqdarı: " + item.SaleItems.Count());
                 Console.WriteLine();
             }
             return list;
-        } 
+        }
+
+        public void RemoveSale(int Number)
+        {
+            var SalesList = _sales.ToList();
+            var RemovedItem = SalesList.Find(p =>p.SaleNumber == Number);
+            _sales.Remove(RemovedItem);
+        }
     }
 }

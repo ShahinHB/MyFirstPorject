@@ -40,10 +40,10 @@ namespace MyFirst
                     case 0:
                         continue;
                     case 1:
-                        ShowSaleCategories();
+                        ShowProductCategories();
                         break;
                     case 2:
-                        ShowProductCategories();
+                        ShowSaleCategories();
                         break;
                     default:
                         Console.WriteLine("Yalnız 0 ilə 3 arası seçim edə bilərsiniz");
@@ -53,7 +53,7 @@ namespace MyFirst
             } while (selectInt != 0);
 #endregion
         }
-        static void ShowSaleCategories()
+        static void ShowProductCategories()
         {
             int selectInt;
             do
@@ -98,12 +98,14 @@ namespace MyFirst
                     case 7:
                         ShowSearch();
                         break;
-                        #endregion
-
+                    #endregion
+                    default:
+                        Console.WriteLine("Yalnız 0 ilə 7 arasında rəqəm daxil edə bilərsiniz");
+                        break;
                 }
             } while (selectInt != 0);
         } //title menu
-        static void ShowProductCategories()
+        static void ShowSaleCategories()
         {
             int selectInt;
             do
@@ -152,7 +154,10 @@ namespace MyFirst
                     case 8:
                         ShowSaleforNumber();
                         break;
-                        #endregion
+                    default:
+                        Console.WriteLine("Yalnız 0 ilə 8 arasında rəqəm daxil edə bilərsiniz");
+                        break;
+                    #endregion
                 }
 
             } while (selectInt != 0);
@@ -448,6 +453,7 @@ namespace MyFirst
             List<Product> result = _marketableService.CategoryProduct(product.ProductCategory);
             Console.WriteLine(result);
 
+
         } //completed
         static void ShowProductbyTwoPrice()
         {
@@ -498,8 +504,35 @@ namespace MyFirst
             #endregion
         } //completed
         static void ShowAddSale() { }
-        static void ShowCancelledProductfromSale() { }
-        static void ShowRemovedSale() { }
+        static void ShowCancelledProductfromSale()
+        {
+            Console.WriteLine("-----------Satışdakı hansısa məhsulun geri qaytarılması------------") ;
+            Console.WriteLine();
+            Console.WriteLine();
+
+            Console.WriteLine("Məhsulun kodunu daxil edin");
+            string inputCode = Console.ReadLine();
+
+        }
+        static void ShowRemovedSale()
+        {
+            Sale sale = new Sale();
+            Console.WriteLine("-----------------------Satışı ləğv edin---------------------");
+             
+            Console.WriteLine("Məhsulun kodunu daxil edin");
+            int code = Convert.ToInt32(Console.ReadLine());
+            _marketableService.RemoveSale(code);
+
+            
+            if (sale != null)
+            {
+                Console.WriteLine("\n -------Məhsul silindi--------");
+            }
+            else
+            {
+                Console.WriteLine("Nəsə səhvlik var");
+            }
+        }
         static void ShowAllSales()
         {
             var table = new ConsoleTable("№","Nömrəsi", "Qiyməti", "Tarix", "Sayı");
@@ -574,44 +607,48 @@ namespace MyFirst
         } //completed
         static void ShowSaleforDate()
         {
-            Console.WriteLine("Verilən tarixdəki satış");
+            Console.WriteLine("---------------Verilən tarixdəki satış-----------");
+            Console.WriteLine();
+            Console.WriteLine();
 
-            Console.WriteLine("Tarixi daxil edin");
+            Console.Write("Tarixi daxil edin: ");
             string date = Console.ReadLine();
             DateTime Date;
+            Console.WriteLine();
 
             while (!DateTime.TryParse(date, out Date))
             {
-                Console.WriteLine("Tarixi daxil edin");
+                Console.Write("Tarixi daxil edin: ");
+                
             }
 
             List<Sale> result = _marketableService.TotalSaleForDate(Date);
 
+            Console.WriteLine();
+
+
             Console.WriteLine(result);
-        }
+        } //completed
         static void ShowSaleforNumber()
         {
             Console.WriteLine("Nömrəyə görə satışın çıxarılması");
+            Console.WriteLine();
+            Console.WriteLine();
 
-            Console.WriteLine("Nömrəni daxil edin");
+            Console.Write("Nömrəni daxil edin: ");
             string inputNumber = Console.ReadLine();
             int Number;
-
+            Console.WriteLine();
             while (!int.TryParse(inputNumber,out Number))
             {
-                Console.WriteLine("Ədəd daxil edin");
+                Console.Write("Ədəd daxil edin: ");
+                Console.WriteLine();
+
             }
 
-            double result = _marketableService.TotalSaleForNumber(Number);
+            List<Sale> result = _marketableService.TotalSaleForNumber(Number);
 
-            if (result != 0)
-            {
-                Console.WriteLine(Number + "nömrəli məhsul satış məlumatları aşağıdakı kimidir");
-            }
-            else
-            {
-                Console.WriteLine("Bu nömrəli məhsula aid heçbir satış məlumatı yoxdur");
-            }
-        }
+            
+        } //completed
     }
 }
