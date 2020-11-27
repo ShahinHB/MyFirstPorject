@@ -5,6 +5,7 @@ using ConsoleTables;
 using MyFirst.Infrastructure.Models;
 using MyFirst.Infrastructure.Enums;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MyFirst
 {
@@ -131,7 +132,7 @@ namespace MyFirst
                     case 0:
                         continue;
                     case 1:
-                        ShowAddSale();
+                        ShowAddSale(); //Adding Sale 
                         break;
                     case 2:
                         ShowCancelledProductfromSale();
@@ -499,11 +500,53 @@ namespace MyFirst
             #region input Your Searching word
             Console.WriteLine("Yazın: ");
             string result = Console.ReadLine();
-            _marketableService.SearchingResult(result);
+            _marketableService.SearchingProduct(result);
             Console.WriteLine(result);
             #endregion
         } //completed
-        static void ShowAddSale() { }
+        static void ShowAddSale()
+        {
+            Console.WriteLine("Satış əlavə edin");
+            Sale addSale = new Sale();
+
+            Console.WriteLine("Satışın Nömrəsini daxil edin: ");
+            string inputNumber = Console.ReadLine();
+            int Number;
+            while (!int.TryParse(inputNumber, out Number))
+            {
+                Console.WriteLine("Yalnız rəqəm daxil edə bilərsiniz");
+            }
+            addSale.SaleNumber = Number;
+
+
+            SaleItem saleItem = new SaleItem();
+            
+            
+            Console.WriteLine("İtem Miqdarını daxil edin");
+            string inputItemCount = Console.ReadLine();
+            int itemCount;
+            while (!int.TryParse(inputItemCount, out itemCount))
+            {
+                Console.WriteLine("Yalnız rəqəm daxil edə bilərsiniz");
+            }
+            saleItem.SaleItemCount = itemCount;
+
+            
+
+
+            Product product = new Product();
+
+            Console.WriteLine("Kodu daxil edin: ");
+            string inputItemCode = Console.ReadLine();
+            int productCode;
+            while (!int.TryParse(inputItemCode, out productCode))
+            {
+                Console.WriteLine("Yalnız rəqəm daxil edə bilərsiniz");
+            }
+            product.ProductCode = productCode;
+
+            _marketableService.AddSale(productCode, itemCount);
+        }
         static void ShowCancelledProductfromSale()
         {
             Console.WriteLine("-----------Satışdakı hansısa məhsulun geri qaytarılması------------") ;
@@ -532,7 +575,7 @@ namespace MyFirst
             {
                 Console.WriteLine("Nəsə səhvlik var");
             }
-        }
+        } //completed
         static void ShowAllSales()
         {
             var table = new ConsoleTable("№","Nömrəsi", "Qiyməti", "Tarix", "Sayı");
@@ -646,9 +689,28 @@ namespace MyFirst
 
             }
 
-            List<Sale> result = _marketableService.TotalSaleForNumber(Number);
 
-            
+            List<Sale> result = _marketableService.SearchingSaleForNumber(Number);
+
+            foreach (var item in result)
+            {
+                Console.WriteLine("");
+                Console.WriteLine("Satış məbləği: " + item.SalePrice);
+                Console.WriteLine("Miqdar: " + item.SaleItems.Count);
+                Console.WriteLine("Satış tarixi: " + item.Date.ToString("dd.MM.yyyy"));
+            }
+
+            var list = _marketableService.ShowSaleItem(Number);
+
+            foreach (var item in list)
+            {
+                Console.WriteLine("");
+                Console.WriteLine("Item nömrəsi: " + item.SaleItemNumber);
+                Console.WriteLine("Miqdarı: " + item.SaleItemCount);
+                Console.WriteLine("Məhsul adı: " + item.ProductName.ProductName);
+            }
+
+
         } //completed
     }
 }

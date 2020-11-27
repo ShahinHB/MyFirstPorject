@@ -11,9 +11,13 @@ namespace MyFirst.Infrastructure.Services
     {
         private List<Sale> _sales;
         private List<Product> _products;
+        private List<SaleItem> _saleItems;
+
         public List<Sale> Sales => _sales;
         public List<Product> Products => _products;
+        public List<SaleItem> SaleItems => _saleItems;
 
+        
         public MarketableService()
         {
 
@@ -93,14 +97,8 @@ namespace MyFirst.Infrastructure.Services
                     {
                         SaleItemNumber= 0001,
                         SaleItemCount = 27,
-                        ProductName = new Product()
-                        {
-                            ProductCode = 215615,
-                            ProductName = "Deadly Cross (Alex Cross Book 28)",
-                            ProductCategory = Category.Books,
-                            ProductPrice = 14.99,
-                            Count = 14
-                        }
+                        ProductName =_products.Find(s=>s.ProductCode == 215615)
+
                     }
 
                 }
@@ -117,14 +115,8 @@ namespace MyFirst.Infrastructure.Services
                     {
                         SaleItemNumber= 0002,
                         SaleItemCount = 2,
-                        ProductName = new Product()
-                        {
-                           ProductCode = 175662,
-                           ProductName = "Xiaomi Mi 9 T Redmi K20",
-                           ProductCategory = Category.Phones,
-                           ProductPrice = 279,
-                           Count = 97
-                        }
+                        ProductName = _products.Find(s=>s.ProductCode == 175662)
+                        
                     }
                 }
 
@@ -139,31 +131,17 @@ namespace MyFirst.Infrastructure.Services
                     {
                         SaleItemNumber= 0003,
                         SaleItemCount = 47,
-                        ProductName = new Product()
-                        {
-                           ProductCode = 281883,
-                           ProductName = "Gigabyte GeForce RTX 2070 Gaming OC 8GB",
-                           ProductCategory = Category.ComputerAccesories,
-                           ProductPrice = 1189,
-                           Count = 5
+                        ProductName = _products.Find(s=>s.ProductCode == 281883)
 
-                        },
-                        
+
 
                     },
                     new SaleItem
                     {
-                        SaleItemNumber= 7182,
+                        SaleItemNumber= 0004,
                         SaleItemCount = 6,
-                        ProductName = new Product()
-                        {
-                           ProductCode = 221690,
-                           ProductName = "Cutiefox 3D Print Crew Neck Pullover Ugly Christmas Sweater Sweatshirts",
-                           ProductCategory = Category.Clothes,
-                           ProductPrice = 23.99,
-                           Count = 17
+                        ProductName = _products.Find(s=>s.ProductCode == 221690)
 
-                        },
 
 
                     }
@@ -174,10 +152,31 @@ namespace MyFirst.Infrastructure.Services
         };
 
         }
-        public void AddSale(Sale sale)
+        public void AddSale(int code, int Count)
         {
+            List<SaleItem> saleItems = new List<SaleItem>();
+            double price = 0;
+            Sale sale1 = new Sale();
+            var product = _products.FindAll(p => p.ProductCode.Equals(code)).FirstOrDefault();
+            var saleItem = new SaleItem();
+            var Code = code;
+            saleItem.SaleItemCount = Count;
+            saleItem.ProductName = product;
+            saleItem.SaleItemNumber = saleItems.Count + 1;
+            saleItems.Add(saleItem);
+            price += Count * saleItem.ProductName.ProductPrice;
+            var saleNo = sale1.SaleNumber;
+            var saleDate = DateTime.Now;
+            var sale = new Sale();
+            sale.SaleNumber = saleNo;
+            sale.SalePrice = price;
+            sale.Date = saleDate;
+            sale.SaleItems = saleItems;
             _sales.Add(sale);
-        }
+
+       
+        
+    }
         public void AddProduct(Product product) //Add Product Information to Product Table
         {
             _products.Add(product);
@@ -238,7 +237,7 @@ namespace MyFirst.Infrastructure.Services
             
             
         }
-        public List<Product> SearchingResult(string Search)
+        public List<Product> SearchingProduct(string Search)
         {
 
             var list = _products.FindAll(s => s.ProductName.Contains(Search)).ToList();
@@ -271,8 +270,9 @@ namespace MyFirst.Infrastructure.Services
             return list;
         }
 
-        public List<Sale> TotalSaleForNumber(int Number)
+        public List<Sale> SearchingSaleForNumber(int Number)
         {
+            List<SaleItem> products = new List<SaleItem>();
             var list = _sales.FindAll(s => s.SaleNumber == Number).ToList();
             foreach (var item in list)
             {
@@ -281,8 +281,10 @@ namespace MyFirst.Infrastructure.Services
                 Console.WriteLine("Tarix: " + item.Date.ToString("dd.MM.yyyy"));
                 Console.WriteLine("Satış miqdarı: " + item.SaleItems.Count());
                 Console.WriteLine();
+                
             }
-
+           
+            
             return list;
         }
 
@@ -324,6 +326,11 @@ namespace MyFirst.Infrastructure.Services
             var SalesList = _sales.ToList();
             var RemovedItem = SalesList.Find(p =>p.SaleNumber == Number);
             _sales.Remove(RemovedItem);
+        }
+
+        public List<SaleItem> ShowSaleItem(int saleNumber)
+        {
+            return _sales.Find(s => s.SaleNumber == saleNumber).SaleItems.ToList();
         }
     }
 }

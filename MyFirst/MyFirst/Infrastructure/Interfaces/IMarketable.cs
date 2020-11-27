@@ -11,18 +11,19 @@ namespace MyFirst.Infrastructure.Interfaces
         List<Sale> Sales { get;}
 
         List<Product> Products { get; }
-        void AddSale(Sale sale);
+        void AddSale(int code, int Count);
         void RemoveProduct(int Code);
         List<Sale> TotalSaleDatebyDate(DateTime StartDate, DateTime EndDate);
         void RemoveProductBySale(int salecode, int count, int productcode);
         List<Sale> TotalSaleForDate(DateTime Date);
         List<Sale> TotalSaleForPrice(double StartPrice, double EndPrice);
-        List<Sale> TotalSaleForNumber(int Number);
+        List<Sale> SearchingSaleForNumber(int Number);
         void AddProduct(Product product);
         List<Product> ChangeProductInfo(int Code);
         List<Product> CategoryProduct(Category category);
         List<Product> ProductforTwoPrice(double StartPrice, double EndPrice);
-        List<Product> SearchingResult(string Search);
+        List<Product> SearchingProduct(string Search);
+        List<SaleItem> ShowSaleItem(int saleNumber);
         void RemoveSale(int Number);
 
 
