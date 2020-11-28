@@ -11,10 +11,10 @@ namespace MyFirst.Infrastructure.Interfaces
         List<Sale> Sales { get;}
 
         List<Product> Products { get; }
-        void AddSale(int code, int Count);
+        void AddSale(int code, int Count, int Number, DateTime Date);
         void RemoveProduct(int Code);
         List<Sale> TotalSaleDatebyDate(DateTime StartDate, DateTime EndDate);
-        void RemoveProductBySale(int salecode, int count, int productcode);
+        void RemoveProductBySale(int salecode, int Removecount, int productcode);
         List<Sale> TotalSaleForDate(DateTime Date);
         List<Sale> TotalSaleForPrice(double StartPrice, double EndPrice);
         List<Sale> SearchingSaleForNumber(int Number);

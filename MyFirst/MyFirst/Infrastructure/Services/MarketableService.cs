@@ -152,11 +152,10 @@ namespace MyFirst.Infrastructure.Services
         };
 
         }
-        public void AddSale(int code, int Count)
+        public void AddSale(int code, int Count, int Number, DateTime Date)
         {
             List<SaleItem> saleItems = new List<SaleItem>();
             double price = 0;
-            Sale sale1 = new Sale();
             var product = _products.FindAll(p => p.ProductCode.Equals(code)).FirstOrDefault();
             var saleItem = new SaleItem();
             var Code = code;
@@ -165,8 +164,8 @@ namespace MyFirst.Infrastructure.Services
             saleItem.SaleItemNumber = saleItems.Count + 1;
             saleItems.Add(saleItem);
             price += Count * saleItem.ProductName.ProductPrice;
-            var saleNo = sale1.SaleNumber;
-            var saleDate = DateTime.Now;
+            var saleNo = Number;
+            var saleDate = Date;
             var sale = new Sale();
             sale.SaleNumber = saleNo;
             sale.SalePrice = price;
@@ -177,11 +176,11 @@ namespace MyFirst.Infrastructure.Services
        
         
     }
-        public void AddProduct(Product product) //Add Product Information to Product Table
+        public void AddProduct(Product product) 
         {
             _products.Add(product);
 
-        }
+        } //Add Product Information to Product Table
         public List<Product> CategoryProduct(Category category) // if Product Category equal this Category, show this Product Information 
         {
             var list = _products.FindAll(s => s.ProductCategory == category).ToList();
@@ -216,7 +215,7 @@ namespace MyFirst.Infrastructure.Services
             }
 
             return list;
-        }
+        }  
 
         public List<Product> ChangeProductInfo(int Code) //Changed Product Name, Count, Category, Code
         {
@@ -230,16 +229,24 @@ namespace MyFirst.Infrastructure.Services
             var RemovedItem = ProductList.Find(r => r.ProductCode == code);
             _products.Remove(RemovedItem);
         }
-        public void RemoveProductBySale(int salecode, int count, int productcode)
+        public void RemoveProductBySale(int salecode, int Removecount, int productcode)
         {
             Sale salescode = _sales.Find(s => s.SaleNumber == salecode);
             SaleItem itemscode = salescode.SaleItems.Find(s => s.ProductName.ProductCode == productcode);
-            
-            
-        }
-        public List<Product> SearchingProduct(string Search)
-        {
+            var saleItem = new SaleItem();
+            var Code = productcode;
+            saleItem.SaleItemCount = Removecount;
+            var saleNo = salecode;
+            var sale = new Sale();
+            sale.SaleNumber = saleNo;
+            sale.SalePrice -= Removecount * sale.SalePrice;
+            sale.SaleItems = SaleItems;
 
+            _sales.Add(sale);
+
+        }
+        public List<Product> SearchingProduct(string Search) // searching all product which contains input symbol
+        {
             var list = _products.FindAll(s => s.ProductName.Contains(Search)).ToList();
             foreach (var item in list)
             {
@@ -254,10 +261,10 @@ namespace MyFirst.Infrastructure.Services
             return list;
         }
 
-        public List<Sale> TotalSaleDatebyDate(DateTime StartDate, DateTime EndDate)
+        public List<Sale> TotalSaleDatebyDate(DateTime StartDate, DateTime EndDate) // if Product Saling Date between StartDate and EndDate.Show this Product Information
         {
             var list = _sales.FindAll(s => s.Date >= StartDate && s.Date <= EndDate).ToList();
-
+            //finding this Product 
             foreach (var item in list)
             {
                 Console.WriteLine("Satışın Nömrəsi: " + item.SaleNumber);
@@ -270,7 +277,7 @@ namespace MyFirst.Infrastructure.Services
             return list;
         }
 
-        public List<Sale> SearchingSaleForNumber(int Number)
+        public List<Sale> SearchingSaleForNumber(int Number) //if input Number equals any SaleNumber. Show this Sale Information
         {
             List<SaleItem> products = new List<SaleItem>();
             var list = _sales.FindAll(s => s.SaleNumber == Number).ToList();
@@ -288,7 +295,7 @@ namespace MyFirst.Infrastructure.Services
             return list;
         }
 
-        public List<Sale> TotalSaleForPrice(double StartPrice, double EndPrice)
+        public List<Sale> TotalSaleForPrice(double StartPrice, double EndPrice) 
         {
             var list = _sales.FindAll(s => s.SalePrice >= StartPrice && s.SalePrice <= EndPrice).ToList();
             // if Product Price between StartPrice and EndPrice. Show this Product Information
@@ -321,14 +328,14 @@ namespace MyFirst.Infrastructure.Services
             return list;
         }
 
-        public void RemoveSale(int Number)
+        public void RemoveSale(int Number) //Removed Sale from table
         {
             var SalesList = _sales.ToList();
             var RemovedItem = SalesList.Find(p =>p.SaleNumber == Number);
             _sales.Remove(RemovedItem);
         }
 
-        public List<SaleItem> ShowSaleItem(int saleNumber)
+        public List<SaleItem> ShowSaleItem(int saleNumber) //extending method
         {
             return _sales.Find(s => s.SaleNumber == saleNumber).SaleItems.ToList();
         }
