@@ -231,18 +231,26 @@ namespace MyFirst.Infrastructure.Services
         }
         public void RemoveProductBySale(int salecode, int Removecount, int productcode)
         {
-            Sale salescode = _sales.Find(s => s.SaleNumber == salecode);
-            SaleItem itemscode = salescode.SaleItems.Find(s => s.ProductName.ProductCode == productcode);
-            var saleItem = new SaleItem();
-            var Code = productcode;
-            saleItem.SaleItemCount = Removecount;
-            var saleNo = salecode;
-            var sale = new Sale();
-            sale.SaleNumber = saleNo;
-            sale.SalePrice -= Removecount * sale.SalePrice;
-            sale.SaleItems = SaleItems;
+            var prolist = _products.ToList();
+            var salelist = _sales.ToList();
 
-            _sales.Add(sale);
+            var sale = salelist.Find(r => r.SaleNumber == salecode);
+
+            bool findproduct = prolist.Exists(r => r.ProductCode == productcode);
+            if (findproduct == true)
+            {
+                var list = prolist.Find(r => r.ProductCode == productcode);
+                if (sale.SalePrice > list.ProductPrice * Removecount)
+                {
+                    sale.SalePrice -= list.ProductPrice * Removecount;
+
+                }
+                else if (sale.SalePrice == list.ProductPrice *Removecount)
+                {
+                    _sales.Remove(sale);
+                }
+            }
+            return  ;
 
         }
         public List<Product> SearchingProduct(string Search) // searching all product which contains input symbol
