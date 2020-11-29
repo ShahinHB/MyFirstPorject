@@ -211,7 +211,7 @@ namespace MyFirst
                         product.ProductCategory = Category.Clothes;
                         break;
                     default:
-                        Console.WriteLine("Yalnız 1 ilə 6 arasında seçim edə bilərsiniz");
+                        Console.WriteLine("Yalnız 1 ilə 6 arasında bir rəqəm seçə bilərsiniz");
                         ShowAddProduct();
 
                         break;
@@ -232,7 +232,10 @@ namespace MyFirst
                 
                 productCodeInput = Console.ReadLine();
             }
-            product.ProductCode = ProductCode;
+            
+                product.ProductCode = ProductCode;
+
+           
 
             #endregion
 
@@ -277,84 +280,94 @@ namespace MyFirst
             Console.WriteLine("-------------- Məhsul üzərində düzəliş etmək --------------");
             Console.Write("Məhsulun kodunu daxil edin: ");
             int code = Convert.ToInt32(Console.ReadLine());
-
-            List<Product> productCode = _marketableService.ChangeProductInfo(code);
-
-            #region Input Price, Count, Name
-            Console.WriteLine("");
-            Console.Write("Məhsulun yeni adını daxil edin: ");
-            string productName = Console.ReadLine();
-
-            Console.WriteLine("");
-            Console.Write("Məhsulun yeni sayını daxil edin: ");
-            int count = Convert.ToInt32(Console.ReadLine());
-
-
-            Console.WriteLine("");
-            Console.Write("Məhsulun yeni məbləğini daxil edin: ");
-            double productPrice = Convert.ToDouble(Console.ReadLine());
-
-            #endregion
-            Console.WriteLine("");
-            int selectInt;
-            do
+            if (code.Equals(product.ProductCode))
             {
-                #region ChooseCategory
-                Console.WriteLine("Kateqoriya daxil edin");
-                Console.WriteLine("1. Televisions");
-                Console.WriteLine("2. Phones");
-                Console.WriteLine("3. Tablets");
-                Console.WriteLine("4. ComputerAccesories");
-                Console.WriteLine("5. Books");
-                Console.WriteLine("6. Clothes");
+                List<Product> productCode = _marketableService.ChangeProductInfo(code);
+
+                #region Input Price, Count, Name
+                Console.WriteLine("");
+                Console.Write("Məhsulun yeni adını daxil edin: ");
+                string productName = Console.ReadLine();
+
+                Console.WriteLine("");
+                Console.Write("Məhsulun yeni sayını daxil edin: ");
+                int count = Convert.ToInt32(Console.ReadLine());
 
 
                 Console.WriteLine("");
-                Console.Write("Seçiminizi edin : ");
-                string select = Console.ReadLine();
+                Console.Write("Məhsulun yeni məbləğini daxil edin: ");
+                double productPrice = Convert.ToDouble(Console.ReadLine());
 
-                while (!int.TryParse(select, out selectInt))
+                #endregion
+                Console.WriteLine("");
+                int selectInt;
+                do
                 {
+                    #region ChooseCategory
+                    Console.WriteLine("Kateqoriya daxil edin");
+                    Console.WriteLine("1. Televisions");
+                    Console.WriteLine("2. Phones");
+                    Console.WriteLine("3. Tablets");
+                    Console.WriteLine("4. ComputerAccesories");
+                    Console.WriteLine("5. Books");
+                    Console.WriteLine("6. Clothes");
+
+
                     Console.WriteLine("");
-                    Console.Write("Rəqəm daxil etməlisiniz!: ");
-                    select = Console.ReadLine();
-                }
+                    Console.Write("Seçiminizi edin : ");
+                    string select = Console.ReadLine();
+
+                    while (!int.TryParse(select, out selectInt))
+                    {
+                        Console.WriteLine("");
+                        Console.Write("Rəqəm daxil etməlisiniz!: ");
+                        select = Console.ReadLine();
+                    }
 
 
-                switch (selectInt)
+                    switch (selectInt)
+                    {
+                        case 1:
+                            product.ProductCategory = Category.Televisions;
+                            break;
+                        case 2:
+                            product.ProductCategory = Category.Phones;
+                            break;
+                        case 3:
+                            product.ProductCategory = Category.Tablets;
+                            break;
+                        case 4:
+                            product.ProductCategory = Category.ComputerAccesories;
+                            break;
+                        case 5:
+                            product.ProductCategory = Category.Books;
+                            break;
+                        case 6:
+                            product.ProductCategory = Category.Clothes;
+                            break;
+                        default:
+                            Console.WriteLine("Yalnız 1 ilə 6 arasında seçim edə bilərsiniz");
+                            break;
+                            #endregion
+                    }
+                } while (selectInt > 6 || selectInt < 1);
+                #region Product Informations
+                foreach (var item in productCode)
                 {
-                    case 1:
-                        product.ProductCategory = Category.Televisions;
-                        break;
-                    case 2:
-                        product.ProductCategory = Category.Phones;
-                        break;
-                    case 3:
-                        product.ProductCategory = Category.Tablets;
-                        break;
-                    case 4:
-                        product.ProductCategory = Category.ComputerAccesories;
-                        break;
-                    case 5:
-                        product.ProductCategory = Category.Books;
-                        break;
-                    case 6:
-                        product.ProductCategory = Category.Clothes;
-                        break;
-                    default:
-                        Console.WriteLine("Yalnız 1 ilə 6 arasında seçim edə bilərsiniz");
-                        break;
-                        #endregion
+                    item.ProductName = productName;
+                    item.Count = count;
+                    item.ProductPrice = productPrice;
+                    item.ProductCategory = (Category)selectInt;
                 }
-            } while (selectInt > 6 || selectInt < 1);
-            #region Product Informations
-            foreach (var item in productCode)
-            {
-                item.ProductName = productName;
-                item.Count = count;
-                item.ProductPrice = productPrice;
-                item.ProductCategory = (Category)selectInt;
             }
+            else
+            {
+                Console.WriteLine();
+                Console.WriteLine("Bu koda uyğun məhsul tapılmadı");
+                Console.WriteLine();
+            }
+
+           
             #endregion
         } //completed
         static void ShowRemoveProduct()
@@ -442,7 +455,9 @@ namespace MyFirst
                         product.ProductCategory = Category.Clothes;
                         break;
                     default:
+                        Console.WriteLine();
                         Console.WriteLine("Yalnız 1 ilə 6 arasında seçim edə bilərsiniz");
+                        Console.WriteLine();
                         break;
                         #endregion
                 }
@@ -733,7 +748,7 @@ namespace MyFirst
             }
             else
             {
-                Console.WriteLine("duzgun tarix daxil edin");
+                Console.WriteLine("Daxil etdiyiniz tarixdə heç bir satış olmayıb");
             }
             List<Sale> result = _marketableService.TotalSaleForDate(Date);
 
