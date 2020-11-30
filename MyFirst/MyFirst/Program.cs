@@ -762,7 +762,7 @@ namespace MyFirst
             Console.WriteLine("Nömrəyə görə satışın çıxarılması");
             Console.WriteLine();
             Console.WriteLine();
-
+            Sale sale = new Sale();
             #region Input SaleNumber
             Console.Write("Nömrəni daxil edin: ");
             string inputNumber = Console.ReadLine();
@@ -775,9 +775,16 @@ namespace MyFirst
                 inputNumber = Console.ReadLine();
             }
             #endregion
-
             List<Sale> result = _marketableService.SearchingSaleForNumber(Number);
 
+            if (inputNumber.Equals(sale.SaleNumber))
+            {           
+            }
+            else
+            {
+                Console.WriteLine("Bu nömrəyə uyğun satış yoxdur");
+                return;
+            }
             #region Show Sale Properties
             foreach (var item in result)
             {
