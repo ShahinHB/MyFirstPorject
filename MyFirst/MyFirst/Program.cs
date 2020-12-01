@@ -54,6 +54,7 @@ namespace MyFirst
             } while (selectInt != 0);
 #endregion
         }
+        #region ShowMethods
         static void ShowProductCategories()
         {
             int selectInt;
@@ -381,16 +382,7 @@ namespace MyFirst
             int code = Convert.ToInt32(Console.ReadLine());
             _marketableService.RemoveProduct(code);
             
-
-            if (product != null)
-            {
-                Console.WriteLine("\n -------Məhsul silindi--------");
-            }
-            else
-            {
-                Console.WriteLine("Nəsə səhvlik var");
-            }
-
+           
         }  //completed
         static void ShowAllProduct()
         {
@@ -587,7 +579,7 @@ namespace MyFirst
             _marketableService.AddSale(productCode, itemCount, Number, Date);
             } while (itemCount ==0);
 
-        }
+        } //completed
         static void ShowCancelledProductfromSale()
         {
             Console.WriteLine("-----------Satışdakı hansısa məhsulun geri qaytarılması------------") ;
@@ -628,7 +620,7 @@ namespace MyFirst
             saleItem.SaleItemCount = SaleItemCount;
 
             _marketableService.RemoveProductBySale(SaleNumber, SaleItemCount, productCode);
-        }
+        } //completed
         static void ShowRemovedSale()
         {
             Sale sale = new Sale();
@@ -777,6 +769,7 @@ namespace MyFirst
             #endregion
             List<Sale> result = _marketableService.SearchingSaleForNumber(Number);
 
+            
             if (inputNumber.Equals(sale.SaleNumber))
             {           
             }
@@ -808,4 +801,5 @@ namespace MyFirst
             #endregion
         } //completed
     }
+    #endregion
 }

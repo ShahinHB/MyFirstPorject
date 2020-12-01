@@ -9,15 +9,18 @@ namespace MyFirst.Infrastructure.Services
 {
     public class MarketableService : IMarketable
     {
+        #region Private Lists
         private List<Sale> _sales;
         private List<Product> _products;
         private List<SaleItem> _saleItems;
+        #endregion
 
+        #region Public Lists
         public List<Sale> Sales => _sales;
         public List<Product> Products => _products;
         public List<SaleItem> SaleItems => _saleItems;
+        #endregion
 
-        
         public MarketableService()
         {
 
@@ -152,7 +155,9 @@ namespace MyFirst.Infrastructure.Services
         };
 
         }
-        public void AddSale(int code, int Count, int Number, DateTime Date)
+
+        #region All Methods
+        public void AddSale(int code, int Count, int Number, DateTime Date) //Add new saling to Sale Table
         {
             List<SaleItem> saleItems = new List<SaleItem>();
             double price = 0;
@@ -176,11 +181,11 @@ namespace MyFirst.Infrastructure.Services
        
         
     }
-        public void AddProduct(Product product) 
+        public void AddProduct(Product product) //Add Product Information to Product Table
         {
             _products.Add(product);
 
-        } //Add Product Information to Product Table
+        } 
         public List<Product> CategoryProduct(Category category) // if Product Category equal this Category, show this Product Information 
         {
             var list = _products.FindAll(s => s.ProductCategory == category).ToList();
@@ -229,7 +234,7 @@ namespace MyFirst.Infrastructure.Services
             var RemovedItem = ProductList.Find(r => r.ProductCode == code);
             _products.Remove(RemovedItem);
         }
-        public void RemoveProductBySale(int salecode, int Removecount, int productcode)
+        public void RemoveProductBySale(int salecode, int Removecount, int productcode) // removed finded Product from finded Sale
         {
             var prolist = _products.ToList();
             var salelist = _sales.ToList();
@@ -347,5 +352,6 @@ namespace MyFirst.Infrastructure.Services
         {
             return _sales.Find(s => s.SaleNumber == saleNumber).SaleItems.ToList();
         }
+        #endregion
     }
 }
